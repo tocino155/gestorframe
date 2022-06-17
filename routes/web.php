@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AltaController;
+use App\Http\Controllers\BusquedasController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,3 +27,10 @@ Route::middleware([
         return view('dash.index');
     })->name('dash');
 });
+
+//busquedas
+Route::get("/buscar_cp/{cp}",[BusquedasController::class,'buscar_cp']);
+//Altas
+Route::get('/alta', [AltaController::class,'vista_alta']);
+Route::post("/guardar_pasiente",[AltaController::class,'guardar_pasiente']);
+Route::delete("/eliminar_pasiente",[AltaController::class,'eliminar_pasiente']);

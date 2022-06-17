@@ -257,9 +257,9 @@ return [
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text'       => 'ALGO2',
+            'text'       => 'ALTA',
             'icon_color' => 'red',
-            'url'        => '#',
+            'url'        => '/alta',
         ],
         [
             'text'       => 'ALGO3',
