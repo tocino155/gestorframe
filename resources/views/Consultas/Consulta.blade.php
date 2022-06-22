@@ -23,6 +23,9 @@
 content: none;
 } 
 
+#text-wrap{
+  white-space: normal !important;
+}
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
@@ -73,7 +76,25 @@ input[type=number]::-webkit-outer-spin-button {
                 <th style="text-align: center;">OPCIONES</th>
               </tr>
             </thead>
-            <tbody>  
+            <tbody> 
+                <tr>
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;">
+        <button class="btn btn-primary">ANTECEDENTES CLINICOS</button>
+        <button class="btn btn-info">GENERAR HISTORIA CLINICA</button>
+        <button class="btn" style="background:#8CE7E7 ; color:white;">ASIGNAR/REASIGNAR</button>
+        <button class="btn" style="background:#E655F4; color:white;">DAR DE ALTA</button>
+        <button class="btn btn-danger">ELIMINAR</button>
+
+            </td> 
+
+                </tr>
 
             </tbody>      
           </table>
@@ -101,6 +122,20 @@ input[type=number]::-webkit-outer-spin-button {
               </tr>
             </thead>
             <tbody>  
+          <tr>
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;"></td> 
+            <td style="text-align: center;">
+        <button class="btn btn-primary">ASIGNAR HORARIO</button>
+        <button class="btn btn-danger">ELIMINAR</button>
+
+            </td> 
+
+                </tr>
+
+
             </tbody>      
           </table>
 

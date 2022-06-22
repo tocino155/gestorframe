@@ -21,8 +21,30 @@
                 {{-- Configured sidebar links --}}
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
             </ul>
-<div>
-            <label style="color: white;">AQUI VAN LOS TURNOS</label>
+<div><center>
+            <div class="table-responsive">
+            <table style="font-weight:bold; color:white;">
+                <thead>
+              <tr>
+                <th style="text-align:center;">TURNO</th>
+              </tr>
+            </thead>
+            <tbody> 
+                <tr>
+                <td>
+                    CI-PED-RGP-01
+                </td>
+                </tr>
+                <tr>
+                <td>
+                    ES-DER-CBH-03
+                </td>
+                </tr>
+
+            </tbody>  
+            </table>    
+
+            </div></center>
 </div>
         </nav>
     </div>
