@@ -10,13 +10,14 @@
                 @if (Route::has('login'))
                     <div class="">
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="text-muted">Dashboard</a>
+                            <a href="{{ url('/dashboard') }}"class="btn btn-outline-light" style="font-weight: bold; font-size: 18px;">SESION INICIADA</a>
                         @else
-                            <a href="{{ route('login') }}" class="text-muted">Log in</a>
-
+                            <a href="{{ route('login') }}" class="btn btn-outline-danger" style="font-weight: bold; font-size: 18px;">INGRESAR</a>
+                            <!--
                             @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="ms-4 text-muted">Register</a>
+                                <a href="{{ route('register') }}" class="ms-4 text-muted">REGISTRARSE</a>
                             @endif
+                        -->
                         @endif
                     </div>
                 @endif
@@ -26,12 +27,12 @@
 
         <x-jet-validation-errors class="mb-3" />
 
-        <div class="card-body">
+        <div class="card-body"  style="color: #9B0000; font-weight: bold; background-color: #9E9D9D; margin-left: -10px; margin-right: -10px; border-radius: 15px;">
             <form method="POST" action="{{ route('register') }}">
                 @csrf
 
                 <div class="mb-3">
-                    <x-jet-label value="{{ __('Name') }}" />
+                    <x-jet-label value="{{ __('NOMBRE') }}" />
 
                     <x-jet-input class="{{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
                                  :value="old('name')" required autofocus autocomplete="name" />
@@ -39,7 +40,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <x-jet-label value="{{ __('Email') }}" />
+                    <x-jet-label value="{{ __('CORREO') }}" />
 
                     <x-jet-input class="{{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email"
                                  :value="old('email')" required />
@@ -47,7 +48,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <x-jet-label value="{{ __('Password') }}" />
+                    <x-jet-label value="{{ __('CONTRASEÑA') }}" />
 
                     <x-jet-input class="{{ $errors->has('password') ? 'is-invalid' : '' }}" type="password"
                                  name="password" required autocomplete="new-password" />
@@ -55,7 +56,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <x-jet-label value="{{ __('Confirm Password') }}" />
+                    <x-jet-label value="{{ __('CONFIRMAR CONTRASEÑA') }}" />
 
                     <x-jet-input class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" />
                 </div>
@@ -77,12 +78,12 @@
                 <div class="mb-0">
                     <div class="d-flex justify-content-end align-items-baseline">
                         <a class="text-muted me-3 text-decoration-none" href="{{ route('login') }}">
-                            {{ __('Already registered?') }}
+                            {{ __('¿YA TE REGISTRASTE?') }}
                         </a>
 
-                        <x-jet-button>
-                            {{ __('Register') }}
-                        </x-jet-button>
+                        <button class="btn btn-outline-dark" style="width: 50%; ">
+                            {{ __('REGISTRAR') }}
+                        </button>
                     </div>
                 </div>
             </form>
