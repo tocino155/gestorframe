@@ -146,14 +146,14 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
+    'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
-    'sidebar_nav_animation_speed' => 300,
+    'sidebar_nav_animation_speed' => 500,
 
     /*
     |--------------------------------------------------------------------------
@@ -248,29 +248,32 @@ return [
         ],
                 [
             'text' => 'dashboard',
+            'icon'   => 'fas fa-fw fa-h-square',
             'route'  => 'dash',
+
         ],
         ['header' => 'account_settings'],
         [
-            'text' => 'PERFIL',
-            'url'  => '#',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text'       => 'ALTA',
-            'icon_color' => 'red',
+            'text'       => 'Registros',
+            'icon'       => 'fas fa-fw fa-plus-square',
             'url'        => '/alta',
         ],
         [
-            'text'       => 'ALGO3',
-            'icon_color' => 'yellow',
+            'text'       => 'Consultas',
+            'icon'       => 'fas fa-fw fa-stethoscope',
             'url'        => '#',
         ],
         [
-            'text'       => 'ALGO5',
-            'icon_color' => 'cyan',
+            'text'       => 'Facturación',
+            'icon'       => 'fas fa-fw fa-medkit',
             'url'        => '#',
         ],
+        [
+            'text'       => 'Catalogos',
+            'icon'       => 'fas fa-fw fa-user-md',
+            'url'        => '#',
+        ],
+        
     
 
     ],
