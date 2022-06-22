@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AltaController;
+use App\Http\Controllers\ConsultasController;
+use App\Http\Controllers\FacturacionController;
 use App\Http\Controllers\BusquedasController;
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +46,8 @@ Route::get('/alta', [AltaController::class,'vista_alta']);
 Route::post("/guardar_pasiente",[AltaController::class,'guardar_pasiente']);
 Route::delete("/eliminar_pasiente",[AltaController::class,'eliminar_pasiente']);
 
+//consulta
+Route::get('/consultas', [ConsultasController::class,'VerConsultas']);
+
+//Facturacion
+Route::get('/Facturaciones', [FacturacionController::class,'VerFactura']);

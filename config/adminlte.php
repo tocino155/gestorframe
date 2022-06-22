@@ -46,7 +46,7 @@ return [
     */
 
     'logo' => '<b>ROCKYS</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/Logo.png',
+    'logo_img' => 'vendor/adminlte/dist/img/Logo.gif',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -146,7 +146,7 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => true,
+    'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
@@ -237,10 +237,7 @@ return [
         ],
 
         // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'search',
-        ],
+
         [
             'text' => 'blog',
             'url'  => 'admin/blog',
@@ -261,20 +258,19 @@ return [
         [
             'text'       => 'Consultas',
             'icon'       => 'fas fa-fw fa-stethoscope',
-            'url'        => '#',
+            'url'        => '/consultas',
         ],
         [
             'text'       => 'Facturación',
             'icon'       => 'fas fa-fw fa-medkit',
-            'url'        => '#',
+            'url'        => '/Facturaciones',
         ],
         [
             'text'       => 'Catalogos',
             'icon'       => 'fas fa-fw fa-user-md',
             'url'        => '#',
         ],
-        
-    
+            
 
     ],
 

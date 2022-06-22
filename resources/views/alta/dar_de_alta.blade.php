@@ -16,6 +16,11 @@
   .marca:hover{
       background: #DBDBDB;
    }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 </style>
 
 
@@ -120,7 +125,7 @@
 
       <div class="tab-pane fade" id="profileAB" role="tabpanel" aria-labelledby="profile-tabAB">
         <br><br>
-        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_pasiente">NUEVO DOCTOR</button>
+        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_doctor">NUEVO DOCTOR</button>
         <br><br><br>
         <div class="table-responsive">
           <table class="table" style="font-weight: bold;">
@@ -279,6 +284,50 @@
   </div>
 </div>
 
+
+<!--agregar doctor -->
+<div class="modal fade" id="agregar_doctor" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">REGISTRO DE NUEVOS MEDICOS</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+<form method="POST" action="{{url('')}}">
+  @csrf
+        <div><center>
+          <div>
+            <label>NOMBRE</label>
+            <input type="text" name="nombre" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
+          </div>
+          <div>
+            <label>APELLIDO PATERNO</label>
+            <input type="text" name="ape_pat" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
+          </div>
+          <div>
+            <label>APELLIDO MATERNO</label>
+            <input type="text" name="ape_mat" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
+          </div>
+
+          <div>
+            <label></label>
+            <select name="" id="" class="form-control">
+            <option value="value1">Value 1</option>
+            </select>
+          </div>
+          
+      <div class="modal-footer">
+        <input type="hidden" name="id_recibo_A" value="">
+        <button class="btn btn-success" id="folio">AGREGAR</button>
+</form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </center></div>
+    </div>
+  </div>
+</div>
 
 
 
