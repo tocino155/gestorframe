@@ -11,7 +11,7 @@
                 @if (Route::has('login'))
                     <div class="">
                         @auth
-                            <a href="{{ url('/dashboard') }}"class="btn btn-outline-light" style="font-weight: bold; font-size: 18px;">SESION INICIADA</a>
+                            <a href="{{ url('/dash') }}"class="btn btn-outline-light" style="font-weight: bold; font-size: 18px;">SESION INICIADA</a>
                         @else
                         <!--
                             <a href="{{ route('login') }}" class="btn btn-outline-danger" style="font-weight: bold; font-size: 18px;">INGRESAR</a>
