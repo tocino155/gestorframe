@@ -32,9 +32,9 @@
 <br>
 <div class="card">
   <div class="card-body">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <ul class="nav nav-pills" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <a class="nav-link active btn" id="profile-tabAC" data-toggle="tab" href="#profileAC" role="tab" aria-controls="profileAB" aria-selected="false" style="font-weight: bold; " >PASIENTES</a>
+        <a class="nav-link active btn" id="profile-tabAC" data-toggle="tab" href="#profileAC" role="tab" aria-controls="profileAB" aria-selected="false" style="font-weight: bold; " >PACIENTES</a>
       </li>
       <li class="nav-item" role="presentation">
         <a class="nav-link btn" id="profile-tabaAB" data-toggle="tab" href="#profileAB" role="tab" aria-controls="profileAB" aria-selected="false" style="font-weight: bold; " >MEDICOS</a>
@@ -46,7 +46,7 @@
       <div class="tab-pane fade show active" id="profileAC" role="tabpanel" aria-labelledby="profile-tabAC">
 
         <br><br>
-        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_pasiente">NUEVO PASIENTE</button>
+        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_pasiente">NUEVO PACIENTE</button>
         <br><br><br>
         <div class="table-responsive">
           <table class="table" style="font-weight: bold;">
@@ -82,7 +82,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLongTitle">ELIMINAR PASIENTE</h3>
+        <h3 class="modal-title" id="exampleModalLongTitle">ELIMINAR PACIENTE</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -93,13 +93,13 @@
   @method('DELETE')
         <p style="font-size: 30px; text-align: center; font-weight: bold;">¿ESTAS SEGURO DE ELIMINAR?</p>
         <div style="text-align: center;">
-          <label style="font-size: 20px; text-align: center; font-weight: bold;">PASIENTE:</label>
+          <label style="font-size: 20px; text-align: center; font-weight: bold;">PACIENTE:</label>
           <label style="font-size: 20px; text-align: center; font-weight: bold; color: red;">{{$pasiente->nombre}} {{$pasiente->apellido_pat}} {{$pasiente->apellido_mat}}</label>
         </div>
         
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger" id="id_pasiente_eliminar" value="{{$pasiente->id}}">ELIMINAR</button>
+        <button class="btn btn-danger" id="id_pasiente_eliminar" value="{{$pasiente->id}}" name="id_pasiente_eliminar">ELIMINAR</button>
 </form>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
@@ -118,8 +118,74 @@
       </div>
 
 
-      <div class="tab-pane fade show active" id="profileAB" role="tabpanel" aria-labelledby="profile-tabAB">
+      <div class="tab-pane fade" id="profileAB" role="tabpanel" aria-labelledby="profile-tabAB">
         <br><br>
+        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_pasiente">NUEVO DOCTOR</button>
+        <br><br><br>
+        <div class="table-responsive">
+          <table class="table" style="font-weight: bold;">
+            <thead class="thead-dark">
+              <tr>
+                <th style="text-align: center;">FOLIO</th>
+                <th style="text-align: center;">NOMBRE</th>
+                <th style="text-align: center;">ESPECIALIDAD</th>
+                <th style="text-align: center;">AREA</th>
+                <th style="text-align: center;">OPCIONES</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach($pasientes as $pasiente)
+              <tr class="marca">
+                <td style="text-align: center;">
+                  <?php echo substr($pasiente->nombre,0,1).substr($pasiente->apellido_pat,0,1).substr($pasiente->apellido_mat,0,1)."-";  ?>
+                  {{$pasiente->id}}
+                </td>
+                <td style="text-align: center;">{{$pasiente->nombre}} {{$pasiente->apellido_pat}} {{$pasiente->apellido_mat}}</td>
+                <td style="text-align: center;">{{$pasiente->telefono}}</td>
+                <td style="text-align: center;">{{$pasiente->correo}}</td>
+                <td style="text-align: center;">
+
+                  <button class="btn btn-warning" style="margin-right: 10px;">EDITAR</button>
+                  <button class="btn btn-danger"  data-toggle="modal" data-target="#eliminar_pasiente{{$pasiente->id}}">ELIMINAR</button>
+                </td>
+              </tr>
+
+<!--eliminar doctor -->
+
+<div class="modal fade" id="eliminar_pasiente{{$pasiente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">ELIMINAR PACIENTE</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+<form method="POST" action="{{url('/eliminar_pasiente')}}">
+  @csrf
+  @method('DELETE')
+        <p style="font-size: 30px; text-align: center; font-weight: bold;">¿ESTAS SEGURO DE ELIMINAR?</p>
+        <div style="text-align: center;">
+          <label style="font-size: 20px; text-align: center; font-weight: bold;">PACIENTE:</label>
+          <label style="font-size: 20px; text-align: center; font-weight: bold; color: red;">{{$pasiente->nombre}} {{$pasiente->apellido_pat}} {{$pasiente->apellido_mat}}</label>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="id_pasiente_eliminar" value="{{$pasiente->id}}" name="id_pasiente_eliminar">ELIMINAR</button>
+</form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+              @endforeach
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

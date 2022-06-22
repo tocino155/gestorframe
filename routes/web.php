@@ -27,7 +27,7 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dash', function () {
         return view('dash.index');
-    })->name('dash');
+    })->name('dash')->middleware("auth");
 
 
 
