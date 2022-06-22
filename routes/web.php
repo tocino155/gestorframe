@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -26,7 +28,14 @@ Route::middleware([
     Route::get('/dash', function () {
         return view('dash.index');
     })->name('dash');
+
+
+
+
+
+
 });
+
 
 //busquedas
 Route::get("/buscar_cp/{cp}",[BusquedasController::class,'buscar_cp']);
@@ -34,3 +43,4 @@ Route::get("/buscar_cp/{cp}",[BusquedasController::class,'buscar_cp']);
 Route::get('/alta', [AltaController::class,'vista_alta']);
 Route::post("/guardar_pasiente",[AltaController::class,'guardar_pasiente']);
 Route::delete("/eliminar_pasiente",[AltaController::class,'eliminar_pasiente']);
+

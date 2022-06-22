@@ -28,6 +28,7 @@
                 {{ $header }}
             </div>
         </header>
+
         <!-- Page Content -->
         <main class="container my-5">
             {{ $slot }}
