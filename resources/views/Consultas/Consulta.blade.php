@@ -88,7 +88,7 @@ input[type=number]::-webkit-outer-spin-button {
             <td style="text-align: center;">
         <button class="btn btn-primary">ANTECEDENTES CLINICOS</button>
         <button class="btn btn-info">GENERAR HISTORIA CLINICA</button>
-        <button class="btn" style="background:#8CE7E7 ; color:white;">ASIGNAR/REASIGNAR</button>
+        <button class="btn" style="background:#8CE7E7 ; color:white;" data-toggle="modal" data-target="#asignar_reasignar">ASIGNAR/REASIGNAR</button>
         <button class="btn" style="background:#E655F4; color:white;">DAR DE ALTA</button>
         <button class="btn btn-danger">ELIMINAR</button>
 
@@ -103,7 +103,59 @@ input[type=number]::-webkit-outer-spin-button {
 </div>
 </div>
 
+<!--MODAL ASIGNAR Y REASGINAR -->
+<div class="modal fade" id="asignar_reasignar" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">ASIGNAR/REASIGNAR PACIENTE</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+<form method="POST" action="{{url('')}}">
+  @csrf
+<div class="row">
+          <div class="col-md-6">
+            <label>ESPECIALIDAD</label>
+            <select class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
+                <option>VALOR1</option>
+            </select>
+            
+          </div>
+          <div class="col-md-6">
+            <label>MEDICO</label>
+            <select class="form-control" onkeyup="this.value = this.value.toUpperCase();" required>
+                <option>VALOR1</option>
+            </select>
+          </div>
+</div>
 
+        <br><br>
+        <div class="row">
+          <div class="col-md-6">
+            <label>AREA</label>
+            <input type="number" name="" id="" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label>OBSERVACIONES</label>
+            <textarea class="form-control" onkeyup="this.value = this.value.toUpperCase();" required></textarea>
+          </div>
+      </div>
+          
+
+          
+          
+      <div class="modal-footer">
+        <input type="hidden" name="id_recibo_A" value="">
+        <button class="btn btn-primary" id="folio">GUARDAR</button>
+</form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Pestaña de Medico  -->
 

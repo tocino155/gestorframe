@@ -268,10 +268,18 @@ input[type=number]::-webkit-outer-spin-button {
             <input type="text" class="form-control" name="domicilio" required>
         </div>
         <br><br>
-        <div class="col-md-12">
+<div class="row">
+          <div class="col-md-7">
             <label>OBSERVACIONES</label>
-            <textarea class="form-control" name="observaciones"></textarea>
-        </div>
+            <textarea class="form-control" name="observaciones" onkeyup="this.value = this.value.toUpperCase();" required></textarea>   
+          </div>
+
+          <div class="col-md-5">
+            <label>ANTECEDENTES CLINICOS</label>
+            <input type="FILE" name="Antecedentes" class="form-control" >
+          </div>
+</div>
+
 
       </div>
       <div class="modal-footer">
@@ -321,9 +329,9 @@ input[type=number]::-webkit-outer-spin-button {
           
       <div class="modal-footer">
         <input type="hidden" name="id_recibo_A" value="">
-        <button class="btn btn-success" id="folio">AGREGAR</button>
+        <button class="btn btn-success" id="folio">GUARDAR</button>
 </form>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
       </center></div>
     </div>
   </div>
