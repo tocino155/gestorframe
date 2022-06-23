@@ -14,6 +14,7 @@ class CreateMedicosTable extends Migration
     public function up()
     {
         Schema::create('medicos', function (Blueprint $table) {
+            $table->id();
             $table->string("nombre")->nullable();
             $table->string("apellido_pat")->nullable();
             $table->string("apellido_mat")->nullable();
@@ -22,7 +23,7 @@ class CreateMedicosTable extends Migration
             $table->string("dia_final")->nullable();
             $table->time("hora_inicio")->nullable();
             $table->time("hora_final")->nullable();
-            $table->foreign("id_especialidad")->references("ID")->on("cat_areas")->onDelete("set null");
+            $table->foreign("id_especialidad")->references("ID")->on("cat_especialidades")->onDelete("set null");
         });
     }
 

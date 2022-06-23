@@ -20,7 +20,7 @@ class CreateTurnosTable extends Migration
             $table->date("fecha")->nullable();
             $table->string("estado")->nullable();
             $table->string("observaciones")->nullable();
-            $table->foreign("id_paciente")->references("id")->on("pacientes")->onDelete("cascade");
+            $table->foreign("id_paciente")->references("id")->on("pacientes")->onDelete("set null");
             $table->foreign("id_medico")->references("id")->on("medicos")->onDelete("set null");
             $table->timestamps();
         });
