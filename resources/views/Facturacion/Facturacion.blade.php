@@ -14,6 +14,10 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 <style type="text/css">
   .marca:hover{
       background: #DBDBDB;
@@ -71,7 +75,7 @@ input[type=number]::-webkit-outer-spin-button {
             <td style="text-align: center;">
         <button class="btn btn-primary">TICKET</button>
         <button class="btn btn-info">ASIGNAR ESTATUS DE PAGADO</button>
-        <button class="btn" style="background:pink; color:white;">ASEGURADORA</button>
+        <button class="btn" style="background:pink; color:white;" data-toggle="modal" data-target="#aseguradora">ASEGURADORA</button>
             </td> 
 
                 </tr>
@@ -81,6 +85,65 @@ input[type=number]::-webkit-outer-spin-button {
 </div>
 </div>
 </div>
+
+<!--MODAL ASIGNAR Y REASGINAR -->
+<div class="modal fade" id="aseguradora" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">ASEGURADORA</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+<form method="POST" action="{{url('')}}">
+  @csrf
+
+        <div class="row">
+          <div class="col-md-12">
+            <label>ASEGURADORA</label>
+            <select id="buscadorAS" class="form-control">
+              <option>valorX</option>
+            </select>
+          </div>
+      </div>
+<br>
+<div class="row">
+          <div class="col-md-7">
+            <label>DESCUENTO ESTABLECIDO POR LA ASEGURADORA</label>
+            <input type="text" name="" class="form-control">
+            
+          </div>
+          <div class="col-md-5">
+            <label>FECHA DE PAGO POR ASEGURADORA</label>
+            <input type="date" name="fecha" class="form-control" required>
+          </div>
+</div>
+
+        <br>
+        <div class="row">
+          <div class="col-md-12">
+            <label>OBSERVACIONES</label>
+            <textarea class="form-control" onkeyup="this.value = this.value.toUpperCase();" required></textarea>
+          </div>
+      </div>
+          
+
+          
+          
+      <div class="modal-footer">
+        <input type="hidden" name="id_recibo_A" value="">
+        <button class="btn btn-primary" id="folio">GUARDAR</button>
+</form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 @stop
 
