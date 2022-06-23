@@ -39,8 +39,7 @@ class AltaController extends Controller
     }
 
     public function eliminar_pasiente(Request $request){
-        echo $request['id_pasiente_eliminar'];
-        //DB::table('pasientes')->delete($request['id_pasiente_eliminar']);
-        //return redirect()->back()->with(['message' => 'Paciente Eliminado con éxito', 'color' => 'danger']);
+        DB::table('pasientes')->delete($request['id_pasiente_eliminar']);
+        return redirect()->back()->with(['message' => 'Paciente Eliminado con éxito', 'color' => 'danger']);
     }
 }
