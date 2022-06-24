@@ -285,9 +285,9 @@ return [
             'url'        => '/Especialidad',
                ],
                [
-            'text'       => 'Procediminetos',
+            'text'       => 'Procedimientos',
             'icon'       => 'fas fa-fw  fa-ambulance', 
-            'url'        => '/Procediminetos',
+            'url'        => '/Procedimientos',
                ],
                
 

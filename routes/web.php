@@ -76,7 +76,7 @@ Route::delete('/Eliminar_especialidad/{id}',[CatalogosController::class,'delete_
 Route::put('/Editar_especialidad/{id}',[CatalogosController::class,'update_espe']);
 
 //procediminetos
-Route::get('/Procediminetos', [CatalogosController::class,'VerProcedimientos']);
+Route::get('/Procedimientos', [CatalogosController::class,'VerProcedimientos']);
 Route::post('/Guardar_procedimiento',[CatalogosController::class,'save_proce']);
 Route::delete('/Eliminar_procedimiento/{id}',[CatalogosController::class,'delete_proce']);
 Route::put('/Editar_procedimiento/{id}',[CatalogosController::class,'update_proce']);

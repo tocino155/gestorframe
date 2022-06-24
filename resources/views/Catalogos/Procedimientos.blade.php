@@ -76,7 +76,7 @@ input[type=number]::-webkit-outer-spin-button {
 <br>
 <div class="card">
   <div class="card-body">
-  <div><h3><center>PROCEDIMINETOS</center></h3></div>  
+  <div><h3><center>PROCEDIMIENTOS</center></h3></div>  
   <button class="btn btn-outline-primary" data-toggle="modal" data-target="#agrega_proce">AGREGAR PROCEDIMIENTOS</button>
 <div class="table-responsive">
 <br>
