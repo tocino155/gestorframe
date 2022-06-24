@@ -3,30 +3,75 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-@stop
-
-@section('content')
+<div><h1><center>REGISTROS</center></h1></div>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css">
 <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
 
+
+@stop
+
+@section('content')
+
+
+
 <style type="text/css">
   .marca:hover{
       background: #DBDBDB;
    }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0;
+  }
+  input[type="file"]{
+        background: white;
+        outline: none;
+     }
+  ::-webkit-file-upload-button{
+    margin-top: -20px;
+    margin-left: -10px;
+    background: #B60000;
+    color: white;
+    height: 35px;
+    border: none;
+    outline: none;
+    font-weight: bolder;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  ::-webkit-file-upload-button:hover{
+   background: #111111;
+
+  }
+  .select2-selection__rendered {
+    line-height: 31px !important;
+  }
+  .select2-container .select2-selection--single {
+      height: 35px !important;
+  }
+  .select2-selection__arrow {
+      height: 34px !important;
+  }
+
+  .select2-container{
+  width: 100%!important;
+  }
+  .select2-search--dropdown .select2-search__field {
+  width: 98%;
+  }
+  .boton_interno{
+      font-weight: bold;
+      padding: 8px;
+  }
 </style>
 
 
 
 @if(Session::has('message'))
-<br>
 <div class="alert alert-{{ Session::get('color') }}" role="alert">
    {{ Session::get('message') }}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -39,7 +84,7 @@ input[type=number]::-webkit-outer-spin-button {
   <div class="card-body">
     <ul class="nav nav-pills" id="myTab" role="tablist">
       <li class="nav-item" role="presentation">
-        <a class="nav-link active btn" id="profile-tabAC" data-toggle="tab" href="#profileAC" role="tab" aria-controls="profileAB" aria-selected="false" style="font-weight: bold; " >PACIENTES</a>
+        <a class="nav-link active btn" id="profile-tabAC" data-toggle="tab" href="#profileAC" role="tab" aria-controls="profileAC" aria-selected="false" style="font-weight: bold; " >PACIENTES</a>
       </li>
       <li class="nav-item" role="presentation">
         <a class="nav-link btn" id="profile-tabaAB" data-toggle="tab" href="#profileAB" role="tab" aria-controls="profileAB" aria-selected="false" style="font-weight: bold; " >MEDICOS</a>
@@ -59,31 +104,174 @@ input[type=number]::-webkit-outer-spin-button {
               <tr>
                 <th style="text-align: center;">FOLIO</th>
                 <th style="text-align: center;">NOMBRE</th>
+                <th style="text-align: center;">FECHA DE NACIMIENTO</th>
+                <th style="text-align: center;">DOMICILIO</th>
+                <th style="text-align: center;">PAIS</th>
                 <th style="text-align: center;">TELEFONO</th>
                 <th style="text-align: center;">CORREO</th>
+                <th style="text-align: center;">AREA</th>
                 <th style="text-align: center;">OPCIONES</th>
               </tr>
             </thead>
             <tbody>
-              @foreach($pasientes as $pasiente)
+              @foreach($pacientes as $pasiente)
               <tr class="marca">
                 <td style="text-align: center;">
                   <?php echo substr($pasiente->nombre,0,1).substr($pasiente->apellido_pat,0,1).substr($pasiente->apellido_mat,0,1)."-";  ?>
                   {{$pasiente->id}}
                 </td>
                 <td style="text-align: center;">{{$pasiente->nombre}} {{$pasiente->apellido_pat}} {{$pasiente->apellido_mat}}</td>
+                <td style="text-align: center;">{{$pasiente->fecha_nacimiento}}</td>
+                <td style="text-align: center; white-space: pre-wrap;">{{$pasiente->domicilio}}</td>
+                <td style="text-align: center;">{{$pasiente->id_pais}}</td>
                 <td style="text-align: center;">{{$pasiente->telefono}}</td>
                 <td style="text-align: center;">{{$pasiente->correo}}</td>
+                <td style="text-align: center;">area</td>
                 <td style="text-align: center;">
-
-                  <button class="btn btn-warning" style="margin-right: 10px;">EDITAR</button>
-                  <button class="btn btn-danger"  data-toggle="modal" data-target="#eliminar_pasiente{{$pasiente->id}}">ELIMINAR</button>
+                  <button class="btn btn-warning boton_interno" style="margin-right: 10px;"  data-toggle="modal" data-target="#editar_pasiente{{$pasiente->id}}">EDITAR</button>
+                  <button class="btn btn-danger boton_interno"  data-toggle="modal" data-target="#eliminar_pasiente{{$pasiente->id}}">ELIMINAR</button>
                 </td>
               </tr>
 
+
+<!-- editar paciente-->
+<div class="modal fade" id="editar_pasiente{{$pasiente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">EDITAR PASIENTE</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+<form method="POST" action="{{url('/actualizar_pasiente')}}" enctype="multipart/form-data">
+  @csrf
+        <div class="row">
+          <div class="col-md-3">
+            <label>NOMBRE</label>
+            <input type="text" name="nombre" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required value="{{$pasiente->nombre}}">
+          </div>
+          <div class="col-md-3">
+            <label>APELLIDO PATERNO</label>
+            <input type="text" name="ape_pat" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required value="{{$pasiente->apellido_pat}}">
+          </div>
+          <div class="col-md-3">
+            <label>APELLIDO MATERNO</label>
+            <input type="text" name="ape_mat" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required value="{{$pasiente->apellido_mat}}">
+          </div>
+          <div class="col-md-3">
+            <label>FECHA DE NACIMIENTO</label>
+            <input type="date" name="fecha" class="form-control" required value="{{$pasiente->fecha_nacimiento}}">
+          </div>
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col-md-3">
+            <label>CODIGO POSTAL</label>
+            <input type="number" name="cp" id="cp_e{{$pasiente->id}}" class="form-control" value="{{$pasiente->cp}}" onkeyup="soltar{{$pasiente->id}}()" >
+          </div>
+          <div class="col-md-3">
+            <label>ALCALDIA / MUNICIPIO</label>
+            <input type="text" name="delegacion" id="delegacion_e{{$pasiente->id}}" class="form-control" readonly value="{{$pasiente->delegacion}}">
+          </div>
+          <div class="col-md-3">
+            <label>ESTADO</label>
+            <input type="text" name="estado" id="estado_e{{$pasiente->id}}" class="form-control" readonly value="{{$pasiente->estado}}">
+          </div>
+          <div class="col-md-3">
+            <label>COLONIA</label>
+            <select name="colonia" id="colonia_e{{$pasiente->id}}" class="form-control">
+              <option>{{$pasiente->colonia}}</option>
+            </select>
+          </div>
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col-md-3">
+            <label>PAIS</label>
+            <select name="pais" class=" form-control">
+              <option value="" selected disabled>.:SELECCONA:.</option>
+              @foreach($paises as $pais)
+              @if($pasiente->id_pais==$pais->id)
+              <option value="{{$pais->id}}" selected>{{$pais->nombre}}</option>
+              @else
+              <option value="{{$pais->id}}">{{$pais->nombre}}</option>
+              @endif
+              @endforeach
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label>TELEFONO</label>
+            <input type="text" name="tel" class="form-control" required minlength="10" maxlength="10" onkeypress="return event.charCode>=48 && event.charCode<=57" value="{{$pasiente->telefono}}">
+          </div>
+          <div class="col-md-6">
+            <label>FOTOGRAFIA</label>
+            <input type="file" name="foto" class="form-control">
+            @if($pasiente->foto!=null)
+            <a class="btn btn-link" data-toggle="modal" data-target="#foto_pasiente{{$pasiente->id}}">ver foto</a>
+            <input type="hidden" name="foto_old" value="{{$pasiente->foto}}">
+            @else
+            <p>sin foto</p>
+            @endif
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-6">
+              <label>DOMICILIO</label>
+              <input type="text" class="form-control" name="domicilio" required value="{{$pasiente->domicilio}}">
+          </div>
+          <div class="col-md-6">
+            <label>CORREO</label>
+            <input type="text" name="correo" class="form-control" required value="{{$pasiente->correo}}">
+          </div>
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col-md-7">
+            <label>OBSERVACIONES</label>
+            <textarea class="form-control" name="observaciones" onkeyup="this.value = this.value.toUpperCase();" required>{{$pasiente->observaciones}}</textarea>   
+          </div>
+
+          <div class="col-md-5">
+            <label>ANTECEDENTES CLINICOS</label>
+            <input type="file" name="antecedentes" class="form-control" >
+            @if($pasiente->ATE_clinicos!=null)
+            <a href="{{url('/archivos_pacientes_ingreso'.'/'.$pasiente->ATE_clinicos)}}" target="_blank">ver archivo</a>
+            <input type="hidden" name="antecedentes_old" value="{{$pasiente->ATE_clinicos}}">
+            @else
+            <p>sin archivo</p>
+            @endif
+            
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="id_pasiente" value="{{$pasiente->id}}">
+        <button class="btn btn-warning" id="folio">ACTUALIZAR</button>
+</form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 <!--eliminar pasiente -->
 
-<div class="modal fade" id="eliminar_pasiente{{$pasiente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="eliminar_pasiente{{$pasiente->id}}"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -106,11 +294,86 @@ input[type=number]::-webkit-outer-spin-button {
       <div class="modal-footer">
         <button class="btn btn-danger" id="id_pasiente_eliminar" value="{{$pasiente->id}}" name="id_pasiente_eliminar">ELIMINAR</button>
 </form>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
       </div>
     </div>
   </div>
 </div>
+
+
+<!--foto -->
+
+<div class="modal fade" id="foto_pasiente{{$pasiente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="background-color: #111111bd;">
+  <div class="modal-dialog modal-dialog-centered" role="document" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">FOTO ACTUAL</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+        <img src="{{url('/archivos_pacientes_ingreso'.'/'.$pasiente->foto)}}" width="50%" height="50%">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+  function soltar{{$pasiente->id}}() {
+
+   $('#estado_e{{$pasiente->id}}').val('');
+   $('#delegacion_e{{$pasiente->id}}').val('');
+    $('#colonia_e{{$pasiente->id}}').empty();
+   var value = $('#cp_e{{$pasiente->id}}').val();
+
+   if(value.length==5){
+
+      $.ajax({
+        url: "{{url('/buscar_cp')}}"+'/'+value,
+        dataType: "json",
+        //context: document.body
+      }).done(function(result) {
+        //$( this ).addClass( "done" );
+        console.log(result);
+
+      if(result.length==0){
+
+         $('#estado_e{{$pasiente->id}}').val('');
+         $('#delegacion_e{{$pasiente->id}}').val('');
+         $('#colonia_e{{$pasiente->id}}').empty();
+
+      }else{
+
+         $('#estado_e{{$pasiente->id}}').val(result[0].estado);
+         $('#delegacion_e{{$pasiente->id}}').val(result[0].municipio);
+
+         for(var i=0;i<result.length;i++){
+               $('#colonia_e{{$pasiente->id}}').append('<option value="'+result[i].colonia+'">'+result[i].colonia+'</option>');
+         }
+
+      }
+        
+      
+      });
+
+
+
+   }else{
+
+      $('#estado_e{{$pasiente->id}}').val('');
+      $('#delegacion_e{{$pasiente->id}}').val('');
+      $('#colonia_e{{$pasiente->id}}').empty();
+
+   }
+  }
+</script>
 
 
               @endforeach
@@ -125,7 +388,7 @@ input[type=number]::-webkit-outer-spin-button {
 
       <div class="tab-pane fade" id="profileAB" role="tabpanel" aria-labelledby="profile-tabAB">
         <br><br>
-        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_doctor">NUEVO DOCTOR</button>
+        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_doctor">NUEVO MEDICO</button>
         <br><br><br>
         <div class="table-responsive">
           <table class="table" style="font-weight: bold;">
@@ -139,52 +402,126 @@ input[type=number]::-webkit-outer-spin-button {
               </tr>
             </thead>
             <tbody>
-              @foreach($pasientes as $pasiente)
+              @foreach($medicos as $medico)
               <tr class="marca">
+                <td style="text-align: center;">{{$medico->id}}</td>
+                <td style="text-align: center;">{{$medico->nombre}} {{$medico->apellido_pat}} {{$medico->apellido_mat}}</td>
                 <td style="text-align: center;">
-                  <?php echo substr($pasiente->nombre,0,1).substr($pasiente->apellido_pat,0,1).substr($pasiente->apellido_mat,0,1)."-";  ?>
-                  {{$pasiente->id}}
+                  @foreach($especialidades as $especialidad)
+                  @if($especialidad->id==$medico->id_especialidad)
+                  {{$especialidad->Especialidad}}
+                  @endif
+                  @endforeach
                 </td>
-                <td style="text-align: center;">{{$pasiente->nombre}} {{$pasiente->apellido_pat}} {{$pasiente->apellido_mat}}</td>
-                <td style="text-align: center;">{{$pasiente->telefono}}</td>
-                <td style="text-align: center;">{{$pasiente->correo}}</td>
                 <td style="text-align: center;">
-
-                  <button class="btn btn-warning" style="margin-right: 10px;">EDITAR</button>
-                  <button class="btn btn-danger"  data-toggle="modal" data-target="#eliminar_pasiente{{$pasiente->id}}">ELIMINAR</button>
+                  @foreach($areas as $area)
+                  @if($area->Especialidad==$medico->id_especialidad)
+                  {{$area->Area}}
+                  @endif
+                  @endforeach
+                </td>
+                <td style="text-align: center;">
+                  <button class="btn btn-warning boton_interno" style="margin-right: 10px;" data-toggle="modal" data-target="#editar_doctor{{$medico->id}}">EDITAR</button>
+                  <button class="btn btn-danger boton_interno"  data-toggle="modal" data-target="#eliminar_doctor{{$medico->id}}">ELIMINAR</button>
                 </td>
               </tr>
 
-<!--eliminar doctor -->
 
-<div class="modal fade" id="eliminar_pasiente{{$pasiente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<!--editar doctor -->
+<div class="modal fade" id="editar_doctor{{$medico->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLongTitle">ELIMINAR PACIENTE</h3>
+        <h3 class="modal-title" id="exampleModalLongTitle">REGISTRO DE NUEVOS MEDICOS</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" >
-<form method="POST" action="{{url('/eliminar_pasiente')}}">
+<form method="POST" action="{{url('/actualizar_medico')}}">
+  @csrf
+        <div><center>
+          <div>
+            <label>NOMBRE</label>
+            <input type="text" name="nombre" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required value="{{$medico->nombre}}">
+          </div>
+          <div>
+            <label>APELLIDO PATERNO</label>
+            <input type="text" name="ape_pat" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required value="{{$medico->apellido_pat}}">
+          </div>
+          <div>
+            <label>APELLIDO MATERNO</label>
+            <input type="text" name="ape_mat" class="form-control" onkeyup="this.value = this.value.toUpperCase();" required value="{{$medico->apellido_mat}}">
+          </div>
+
+          <div>
+            <label>ESPECIALIDAD</label>
+            <select name="especialidad" id="especialidad" class="form-control ">
+              <option value="" selected disabled>.:SELECCONA:.</option>
+              @foreach($especialidades as $especialidad)
+              @if($especialidad->id==$medico->id_especialidad)
+              <option value="{{$especialidad->id}}" selected>{{$especialidad->Especialidad}}</option>
+              @else
+              <option value="{{$especialidad->id}}">{{$especialidad->Especialidad}}</option>
+              @endif
+              @endforeach
+            </select>
+          </div>
+        </center>
+      </div>
+    </div>
+          
+      <div class="modal-footer">
+        <input type="hidden" name="id_medico" value="{{$medico->id}}">
+        <button class="btn btn-warning" id="folio">ACTUALIZAR</button>
+</form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+      </center></div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!--eliminar pasiente -->
+
+<div class="modal fade" id="eliminar_doctor{{$medico->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">ELIMINAR MEDICO</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+<form method="POST" action="{{url('/eliminar_medico')}}">
   @csrf
   @method('DELETE')
         <p style="font-size: 30px; text-align: center; font-weight: bold;">¿ESTAS SEGURO DE ELIMINAR?</p>
         <div style="text-align: center;">
-          <label style="font-size: 20px; text-align: center; font-weight: bold;">PACIENTE:</label>
-          <label style="font-size: 20px; text-align: center; font-weight: bold; color: red;">{{$pasiente->nombre}} {{$pasiente->apellido_pat}} {{$pasiente->apellido_mat}}</label>
+          <label style="font-size: 20px; text-align: center; font-weight: bold;">MEDICO:</label>
+          <label style="font-size: 20px; text-align: center; font-weight: bold; color: red;">{{$medico->nombre}} {{$medico->apellido_pat}} {{$medico->apellido_mat}}</label>
         </div>
         
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger" id="id_pasiente_eliminar" value="{{$pasiente->id}}" name="id_pasiente_eliminar">ELIMINAR</button>
+        <button class="btn btn-danger" id="id_medico_eliminar" value="{{$medico->id}}" name="id_medico_eliminar">ELIMINAR</button>
 </form>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
       </div>
     </div>
   </div>
 </div>
+
+
 
 
               @endforeach
@@ -208,7 +545,7 @@ input[type=number]::-webkit-outer-spin-button {
         </button>
       </div>
       <div class="modal-body" >
-<form method="POST" action="{{url('/guardar_pasiente')}}">
+<form method="POST" action="{{url('/guardar_pasiente')}}" enctype="multipart/form-data">
   @csrf
         <div class="row">
           <div class="col-md-3">
@@ -251,11 +588,27 @@ input[type=number]::-webkit-outer-spin-button {
         <div class="row">
           <div class="col-md-3">
             <label>PAIS</label>
-            <select name="pais" class="form-control"></select>
+            <select name="pais" class=" form-control ">
+              <option value="" selected disabled>.:SELECCONA:.</option>
+              @foreach($paises as $pais)
+              <option value="{{$pais->id}}">{{$pais->nombre}}</option>
+              @endforeach
+            </select>
           </div>
           <div class="col-md-3">
             <label>TELEFONO</label>
             <input type="text" name="tel" class="form-control" required minlength="10" maxlength="10" onkeypress="return event.charCode>=48 && event.charCode<=57">
+          </div>
+          <div class="col-md-6">
+            <label>FOTOGRAFIA</label>
+            <input type="file" name="foto" class="form-control">
+          </div>
+        </div>
+        <br><br>
+        <div class="row">
+          <div class="col-md-6">
+              <label>DOMICILIO</label>
+              <input type="text" class="form-control" name="domicilio" required>
           </div>
           <div class="col-md-6">
             <label>CORREO</label>
@@ -263,12 +616,7 @@ input[type=number]::-webkit-outer-spin-button {
           </div>
         </div>
         <br><br>
-        <div class="col-md-12">
-            <label>DOMICILIO</label>
-            <input type="text" class="form-control" name="domicilio" required>
-        </div>
-        <br><br>
-<div class="row">
+        <div class="row">
           <div class="col-md-7">
             <label>OBSERVACIONES</label>
             <textarea class="form-control" name="observaciones" onkeyup="this.value = this.value.toUpperCase();" required></textarea>   
@@ -276,17 +624,15 @@ input[type=number]::-webkit-outer-spin-button {
 
           <div class="col-md-5">
             <label>ANTECEDENTES CLINICOS</label>
-            <input type="FILE" name="Antecedentes" class="form-control" >
+            <input type="file" name="antecedentes" class="form-control" >
           </div>
-</div>
-
+        </div>
 
       </div>
       <div class="modal-footer">
-        <input type="hidden" name="id_recibo_A" value="">
         <button class="btn btn-success" id="folio">AGREGAR</button>
 </form>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
       </div>
     </div>
   </div>
@@ -304,7 +650,7 @@ input[type=number]::-webkit-outer-spin-button {
         </button>
       </div>
       <div class="modal-body" >
-<form method="POST" action="{{url('')}}">
+<form method="POST" action="{{url('/guardar_medico')}}">
   @csrf
         <div><center>
           <div>
@@ -321,14 +667,19 @@ input[type=number]::-webkit-outer-spin-button {
           </div>
 
           <div>
-            <label></label>
-            <select name="" id="" class="form-control">
-            <option value="value1">Value 1</option>
+            <label>ESPECIALIDAD</label>
+            <select name="especialidad" id="especialidad" class="form-control ">
+              <option value="" selected disabled>.:SELECCONA:.</option>
+              @foreach($especialidades as $especialidad)
+              <option value="{{$especialidad->id}}">{{$especialidad->Especialidad}}</option>
+              @endforeach
             </select>
           </div>
+        </center>
+      </div>
+    </div>
           
       <div class="modal-footer">
-        <input type="hidden" name="id_recibo_A" value="">
         <button class="btn btn-success" id="folio">GUARDAR</button>
 </form>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
@@ -339,11 +690,25 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 
+@if(Session::get('message')=="Medico Guardado con éxito" || Session::get('message')=="Medico Actualizado con éxito" || Session::get('message')=="Medico Eliminado con éxito")
+<script type="text/javascript">
+  document.getElementById("profile-tabAC").classList.remove("active");
+  document.getElementById("profileAC").classList.remove("active");
+  document.getElementById("profileAC").classList.remove("show");
+  document.getElementById("profile-tabaAB").classList.add("active");
+  document.getElementById("profileAB").classList.add("active");
+  document.getElementById("profileAB").classList.add("show");
+</script>
+@endif
+
+
+
+
+
+
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+
 
 @section('js')
 <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
@@ -407,6 +772,10 @@ input[type=number]::-webkit-outer-spin-button {
    }
   });
 
+$(document).ready(function() {
+    $('.js-example-basic-single').select2();
+    $('.js-example-basic-multiple').select2();
+});
 
 </script>
 @stop

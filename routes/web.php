@@ -41,13 +41,22 @@ Route::middleware([
 
 //busquedas
 Route::get("/buscar_cp/{cp}",[BusquedasController::class,'buscar_cp']);
+Route::get("/buscar_especialidad/{id}",[BusquedasController::class,'buscar_especialidad']);
+Route::get("/buscar_medico/{id}",[BusquedasController::class,'buscar_medico']);
+Route::get("/buscar_procedimiento/{id}",[BusquedasController::class,'buscar_procedimiento']);
+
 //Altas
 Route::get('/alta', [AltaController::class,'vista_alta']);
-Route::post("/guardar_pasiente",[AltaController::class,'guardar_pasiente']);
-Route::delete("/eliminar_pasiente",[AltaController::class,'eliminar_pasiente']);
+Route::post("/guardar_pasiente",[AltaController::class,'guardar_paciente']);
+Route::post("/actualizar_pasiente",[AltaController::class,'actualizar_paciente']);
+Route::delete("/eliminar_pasiente",[AltaController::class,'eliminar_paciente']);
+Route::delete("/eliminar_medico",[AltaController::class,'eliminar_medico']);
+Route::post("/guardar_medico",[AltaController::class,'guardar_medico']);
+Route::post("/actualizar_medico",[AltaController::class,'actualizar_medico']);
 
 //consulta
 Route::get('/consultas', [ConsultasController::class,'VerConsultas']);
+Route::post('/guardar_asignacion', [ConsultasController::class,'guardar_asignacion']);
 
 //Facturacion
 Route::get('/Facturaciones', [FacturacionController::class,'VerFactura']);

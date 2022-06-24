@@ -19,6 +19,8 @@ class CreatePacientesTable extends Migration
             $table->string("apellido_pat")->nullable();
             $table->string("apellido_mat")->nullable();
             $table->date("fecha_nacimiento")->nullable();
+            $table->date("fecha_ingreso")->nullable();
+            $table->date("fecha_salida")->nullable();
             $table->string("domicilio")->nullable();
             $table->BigInteger("id_pais")->nullable();
             $table->BigInteger("telefono")->nullable();
@@ -28,10 +30,12 @@ class CreatePacientesTable extends Migration
             $table->string("colonia")->nullable();
             $table->string("cp")->nullable();
             $table->string("observaciones")->nullable();
+            $table->string("foto")->nullable();
+            $table->string("ATE_clinicos")->nullable();
             $table->unsignedBigInteger("id_estatus")->nullable();
             $table->unsignedBigInteger("id_aseguradora")->nullable();
-            $table->foreign("id_estatus")->references("id")->on("cat_estatus")->onDelete("set null");
-            $table->foreign("id_aseguradora")->references("id")->on("cat_aseguradoras")->onDelete("set null");
+            $table->foreign("id_estatus")->references("id")->on("cat_estatus");
+            $table->foreign("id_aseguradora")->references("id")->on("cat_aseguradoras");
             $table->timestamps();
         });
     }

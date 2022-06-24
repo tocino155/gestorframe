@@ -17,4 +17,19 @@ class BusquedasController extends Controller
 
          return json_encode($result);
     }
+    public function buscar_especialidad($id)
+    {
+         $result=DB::table('cat_areas')->where('Especialidad',$id)->get();
+         return json_encode($result);
+    }
+    public function buscar_medico($id)
+    {
+         $result2=DB::table('medicos')->where('id_especialidad',$id)->get();
+         return json_encode($result2);
+    }
+    public function buscar_procedimiento($id)
+    {
+         $result=DB::table('cat_procedimiento_costo')->where('id',$id)->get();
+         return json_encode($result);
+    }
 }
