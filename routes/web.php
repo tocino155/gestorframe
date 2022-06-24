@@ -58,6 +58,7 @@ Route::post("/actualizar_medico",[AltaController::class,'actualizar_medico']);
 //consulta
 Route::get('/consultas', [ConsultasController::class,'VerConsultas']);
 Route::post('/guardar_asignacion', [ConsultasController::class,'guardar_asignacion']);
+Route::get('/generar_historial/{id}', [ConsultasController::class,'generar_historial']);
 
 //Facturacion
 Route::get('/Facturaciones', [FacturacionController::class,'VerFactura']);
