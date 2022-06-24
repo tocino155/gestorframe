@@ -268,7 +268,31 @@ return [
         [
             'text'       => 'Catalogos',
             'icon'       => 'fas fa-fw fa-user-md',
-            'url'        => '#',
+            'submenu'    => [
+               [
+            'text'       => 'Areas',
+            'icon'       => 'fas fa-fw fa-wheelchair', 
+            'url'        => '/Areas',
+               ],
+               [
+            'text'       => 'Aseguradoras',
+            'icon'       => 'fas fa-fw fa-credit-card', 
+            'url'        => '/Aseguradoras',
+               ],
+               [
+            'text'       => 'Especialidad',
+            'icon'       => 'fas fa-fw fa-heartbeat', 
+            'url'        => '/Especialidad',
+               ],
+               [
+            'text'       => 'Procediminetos',
+            'icon'       => 'fas fa-fw  fa-ambulance', 
+            'url'        => '/Procediminetos',
+               ],
+               
+
+            ],
+
         ],
             
 

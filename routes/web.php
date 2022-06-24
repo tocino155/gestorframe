@@ -5,6 +5,7 @@ use App\Http\Controllers\AltaController;
 use App\Http\Controllers\ConsultasController;
 use App\Http\Controllers\FacturacionController;
 use App\Http\Controllers\BusquedasController;
+use App\Http\Controllers\CatalogosController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,3 +52,31 @@ Route::get('/consultas', [ConsultasController::class,'VerConsultas']);
 
 //Facturacion
 Route::get('/Facturaciones', [FacturacionController::class,'VerFactura']);
+
+//catalogos
+//area
+Route::get('/Areas', [CatalogosController::class,'VerAreas']);
+Route::post('/Guardar_area',[CatalogosController::class,'save_area']);
+Route::delete('/Eliminar_area/{id}',[CatalogosController::class,'delete_area']);
+Route::put('/Editar_area/{id}',[CatalogosController::class,'update_area']);
+
+
+
+//aseguradora
+Route::get('/Aseguradoras', [CatalogosController::class,'VerAseguradoras']);
+Route::post('/Guardar_aseguradora',[CatalogosController::class,'save_asegu']);
+Route::delete('/Eliminar_aseguradora/{id}',[CatalogosController::class,'delete_asegu']);
+Route::put('/Editar_aseguradora/{id}',[CatalogosController::class,'update_asegu']);
+
+
+//especialidad
+Route::get('/Especialidad', [CatalogosController::class,'VerEspecialidad']);
+Route::post('/Guardar_especialidad',[CatalogosController::class,'save_espe']);
+Route::delete('/Eliminar_especialidad/{id}',[CatalogosController::class,'delete_espe']);
+Route::put('/Editar_especialidad/{id}',[CatalogosController::class,'update_espe']);
+
+//procediminetos
+Route::get('/Procediminetos', [CatalogosController::class,'VerProcedimientos']);
+Route::post('/Guardar_procedimiento',[CatalogosController::class,'save_proce']);
+Route::delete('/Eliminar_procedimiento/{id}',[CatalogosController::class,'delete_proce']);
+Route::put('/Editar_procedimiento/{id}',[CatalogosController::class,'update_proce']);
