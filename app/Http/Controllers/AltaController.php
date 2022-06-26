@@ -13,6 +13,7 @@ class AltaController extends Controller
     }
 
     public function vista_alta(){
+        
         $pacientes=DB::table("pacientes")->select("*")->get();
         $pacientes_asignaciones=DB::table("pacientes_asignaciones")->select("*")->get();
         $medicos=DB::table("medicos")->select("*")->get();
