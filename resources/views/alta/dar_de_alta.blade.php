@@ -47,25 +47,14 @@
    background: #111111;
 
   }
-  .select2-selection__rendered {
-    line-height: 31px !important;
-  }
-  .select2-container .select2-selection--single {
-      height: 35px !important;
-  }
-  .select2-selection__arrow {
-      height: 34px !important;
-  }
-
-  .select2-container{
-  width: 100%!important;
-  }
-  .select2-search--dropdown .select2-search__field {
-  width: 98%;
-  }
+  
   .boton_interno{
       font-weight: bold;
       padding: 8px;
+  }
+  .select2-selection__choice__display{
+    color: black;
+    font-weight: bold;
   }
 </style>
 
@@ -115,6 +104,7 @@
             </thead>
             <tbody>
               @foreach($pacientes as $pasiente)
+              <?php $area=null;$especialidad=null; ?>
               <tr class="marca">
                 <td style="text-align: center;">
                   <?php echo substr($pasiente->nombre,0,1).substr($pasiente->apellido_pat,0,1).substr($pasiente->apellido_mat,0,1)."-";  ?>
@@ -123,10 +113,31 @@
                 <td style="text-align: center;">{{$pasiente->nombre}} {{$pasiente->apellido_pat}} {{$pasiente->apellido_mat}}</td>
                 <td style="text-align: center;">{{$pasiente->fecha_nacimiento}}</td>
                 <td style="text-align: center; white-space: pre-wrap;">{{$pasiente->domicilio}}</td>
-                <td style="text-align: center;">{{$pasiente->id_pais}}</td>
+                <td style="text-align: center;">
+                  @foreach($paises as $pais)
+                  @if($pais->id==$pasiente->id_pais)
+                  {{$pais->nombre}}
+                  @endif()
+                  @endforeach
+                </td>
                 <td style="text-align: center;">{{$pasiente->telefono}}</td>
                 <td style="text-align: center;">{{$pasiente->correo}}</td>
-                <td style="text-align: center;">area</td>
+                <td style="text-align: center;">
+                @foreach($pacientes_asignaciones as $paciente_asi)
+                @if($paciente_asi->id_paciente==$pasiente->id)
+                @foreach($areas as $area)
+                @if($area->Especialidad==$paciente_asi->id_especialidad)
+                @break
+                @endif
+                @endforeach
+                @endif
+                @endforeach
+                @if($area!=null)
+                {{$area->Area}}
+                @else
+                Sin Asignar
+                @endif
+                </td>
                 <td style="text-align: center;">
                   <button class="btn btn-warning boton_interno" style="margin-right: 10px;"  data-toggle="modal" data-target="#editar_pasiente{{$pasiente->id}}">EDITAR</button>
                   <button class="btn btn-danger boton_interno"  data-toggle="modal" data-target="#eliminar_pasiente{{$pasiente->id}}">ELIMINAR</button>
@@ -190,7 +201,7 @@
         <div class="row">
           <div class="col-md-3">
             <label>PAIS</label>
-            <select name="pais" class=" form-control">
+            <select name="pais" class="form-control">
               <option value="" selected disabled>.:SELECCONA:.</option>
               @foreach($paises as $pais)
               @if($pasiente->id_pais==$pais->id)
@@ -312,7 +323,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" >
+      <div class="modal-body" style="text-align: center;">
         <img src="{{url('/archivos_pacientes_ingreso'.'/'.$pasiente->foto)}}" width="50%" height="50%">
       </div>
       <div class="modal-footer">
@@ -588,10 +599,13 @@
         <div class="row">
           <div class="col-md-3">
             <label>PAIS</label>
-            <select name="pais" class=" form-control ">
-              <option value="" selected disabled>.:SELECCONA:.</option>
+            <select name="pais" class=" form-control js-example-basic-multiple" style="width: 100%;" multiple id="pais">
               @foreach($paises as $pais)
+              @if($pais->id==146)
+              <option value="{{$pais->id}}" selected >{{$pais->nombre}}</option>
+              @else
               <option value="{{$pais->id}}">{{$pais->nombre}}</option>
+              @endif
               @endforeach
             </select>
           </div>
@@ -710,12 +724,23 @@
 
 
 
+
 @section('js')
 <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript">
+
+  var ultimoValorValido = 146;
+  $("#pais").on("change", function() {
+  if ($("#pais option:checked").length > 1) {
+    $("#pais").val(ultimoValorValido);
+  } else {
+    ultimoValorValido = $("#pais").val();
+  }
+  });
+
   $(document).ready(function() {
     $('.table').DataTable({
        "language": {

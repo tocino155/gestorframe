@@ -16,6 +16,7 @@ class CreateCatEspecialidadesTable extends Migration
         Schema::create('cat_especialidades', function (Blueprint $table) {
             $table->id();
             $table->string("Especialidad")->nullable();
+            $table->integer("Aforo")->nullable();
         });
     }
 

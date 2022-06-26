@@ -22,7 +22,7 @@
                 @each('adminlte::partials.sidebar.menu-item', $adminlte->menu('sidebar'), 'item')
             </ul>
 <div><center>
-            <div class="table-responsive">
+            <div class="table-responsive" data-toggle="modal" data-target="#turnos">
             <table style="font-weight:bold; color:white;">
                 <thead>
               <tr>
@@ -49,4 +49,45 @@
         </nav>
     </div>
 
+
+
+
+
 </aside>
+
+
+<!--ver turnos -->
+<div class="modal fade" id="turnos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">TURNOS</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-align: center;">TURNO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center;">CI-PED-RGP-01</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+      </div>
+    </div>
+  </div>
+</div>    
+
+
+

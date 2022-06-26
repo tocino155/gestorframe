@@ -45,6 +45,8 @@ Route::get("/buscar_cp/{cp}",[BusquedasController::class,'buscar_cp']);
 Route::get("/buscar_especialidad/{id}",[BusquedasController::class,'buscar_especialidad']);
 Route::get("/buscar_medico/{id}",[BusquedasController::class,'buscar_medico']);
 Route::get("/buscar_procedimiento/{id}",[BusquedasController::class,'buscar_procedimiento']);
+Route::get("/buscar_paciente/{id}",[BusquedasController::class,'buscar_paciente']);
+Route::get("/buscar_aseguradora/{id}",[BusquedasController::class,'buscar_aseguradora']);
 
 //Altas
 Route::get('/alta', [AltaController::class,'vista_alta']);
@@ -59,9 +61,15 @@ Route::post("/actualizar_medico",[AltaController::class,'actualizar_medico']);
 Route::get('/consultas', [ConsultasController::class,'VerConsultas']);
 Route::post('/guardar_asignacion', [ConsultasController::class,'guardar_asignacion']);
 Route::get('/generar_historial/{id}', [ConsultasController::class,'generar_historial']);
+Route::post("/dar_de_alta_paciente",[ConsultasController::class,'dar_de_alta_paciente']);
+Route::post("/eliminar_paciente_s",[ConsultasController::class,'eliminar_paciente_s']);
+Route::post("/guardar_horario_medico",[ConsultasController::class,'guardar_horario_medico']);
 
 //Facturacion
 Route::get('/Facturaciones', [FacturacionController::class,'VerFactura']);
+Route::post('/asignar_aseguradora', [FacturacionController::class,'asignar_aseguradora']);
+Route::post('/estatus_pago/{id}', [FacturacionController::class,'estatus_pago']);
+Route::get('/generar_factura/{id}', [FacturacionController::class,'generar_factura']);
 
 //catalogos
 //area

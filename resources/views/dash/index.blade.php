@@ -15,5 +15,10 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script type="text/javascript">
+        let sonido2=new Audio("{{url('/sonidos/inicio.m4a')}}");
+        $(document).ready(function(){
+            sonido2.play();
+        });
+    </script>
 @stop

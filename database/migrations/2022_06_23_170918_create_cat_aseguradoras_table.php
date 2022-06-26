@@ -16,7 +16,7 @@ class CreateCatAseguradorasTable extends Migration
         Schema::create('cat_aseguradoras', function (Blueprint $table) {
             $table->id();
             $table->string("Aseguradora")->nullable();
-            $table->string("Porcentaje")->nullable();
+            $table->integer("Porcentaje")->nullable();
         });
     }
 

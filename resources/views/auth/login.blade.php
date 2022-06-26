@@ -42,14 +42,14 @@
                     <x-jet-label value="{{ __('USUARIO') }}" />
 
                     <x-jet-input class="{{ $errors->has('email') ? 'is-invalid' : '' }}" type="email"
-                                 name="email" :value="old('email')" required />
+                                 name="email" :value="old('email')" required onclick="alerta_sonido()"/>
                     <x-jet-input-error for="email"></x-jet-input-error>
                 </div>
 
                 <div class="mb-3">
                     <x-jet-label value="{{ __('CONTRASEÑA') }}" />
 
-                    <x-jet-input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" type="password"
+                    <x-jet-input class="form-control{{ $errors->has('password') ? ' CONTRASEÑA INCORRECTA' : '' }}" type="password"
                                  name="password" required autocomplete="current-password" />
                     <x-jet-input-error for="password"></x-jet-input-error>
                 </div>
@@ -72,7 +72,7 @@
                             </a>
                         @endif
                     -->
-                        <button class="btn btn-outline-dark" style="width: 50%; ">
+                        <button class="btn btn-outline-dark" style="width: 50%; " onclick="inicio_sonido()">
                             {{ __('INGRESAR') }}
                         </button>
                     </div>
@@ -81,3 +81,10 @@
         </div>
     </x-jet-authentication-card>
 </x-guest-layout>
+
+<script type="text/javascript">
+        let sonido=new Audio("{{url('/sonidos/resident-evil-remix.mp3')}}");
+        function alerta_sonido(){
+            sonido.play();
+        }
+</script>

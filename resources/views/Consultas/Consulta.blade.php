@@ -86,8 +86,8 @@ input[type=number]::-webkit-outer-spin-button {
                         </tr>
                       </thead>
                       <tbody> 
-                        <?php $area=null;$especialidad=null; ?>
                         @foreach($pacientes as $paciente)
+                        <?php $area=null;$especialidad=null; ?>
                         <tr class="marca">
                           <td style="text-align: center;">{{$paciente->id}}</td> 
                           <td style="text-align: center;">{{$paciente->nombre}} {{$paciente->apellido_pat}} {{$paciente->apellido_mat}}</td> 
@@ -141,15 +141,83 @@ input[type=number]::-webkit-outer-spin-button {
                                   <p>sin archivo</p>
                                   @endif
                                   <button class="btn btn-primary igual" style="margin-bottom: 10px;"  data-toggle="modal" data-target="#historial_pasiente{{$paciente->id}}">GENERAR HISTORIA CLINICA</button><br>
+                                  @if($paciente->id_estatus!=4)
                                   <button class="btn btn-info igual" style=" margin-bottom: 10px;" data-toggle="modal" data-target="#asignar_reasignar" onclick="pasar_id({{$paciente->id}});">ASIGNAR/REASIGNAR</button><br>
-                                  <button class="btn igual" style="background:#E655F4; color:white; margin-bottom: 10px;">DAR DE ALTA</button><br>
-                                  <button class="btn btn-danger igual">ELIMINAR</button><br><br>
+                                  @else
+                                  <p>ya no es posible asignar</p>
+                                  @endif
+                                  <button class="btn igual" style="background:#E655F4; color:white; margin-bottom: 10px;" data-toggle="modal" data-target="#alta_pasiente{{$paciente->id}}">DAR DE ALTA</button><br>
+                                  <button class="btn btn-danger igual" data-toggle="modal" data-target="#eliminar_pasiente_s{{$paciente->id}}">ELIMINAR</button><br><br>
                               </div>
-
+                              @if($paciente->id_estatus!=5)
                               <button class="btn btn-success boton_interno" id="menu{{$paciente->id}}" style="font-weight: bold; font-size: 20px;">+</button>
-                            
+                              @else
+                              <button id="menu{{$paciente->id}}" style="display: none;">+</button>
+                              <p>sin acciones por ser eliminado</p>
+                              @endif
                           </td> 
                         </tr>
+
+
+<!--dar de alta -->
+<div class="modal fade" id="alta_pasiente{{$paciente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered" role="document" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">DAR DE ALTA</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<form method="POST" action="{{url('/dar_de_alta_paciente')}}">
+  @csrf
+        <p style="font-size: 30px; text-align: center; font-weight: bold;">¿ESTAS SEGURO DE DAR DE ALTA?</p>
+        <div style="text-align: center;">
+          <label style="font-size: 20px; text-align: center; font-weight: bold;">PACIENTE:</label>
+          <label style="font-size: 20px; text-align: center; font-weight: bold; color: red;">{{$paciente->nombre}} {{$paciente->apellido_pat}} {{$paciente->apellido_mat}}</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" id="id_paciente_alta" value="{{$paciente->id}}" name="id_paciente_alta">DAR DE ALTA</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--eliminar pasiente -->
+
+<div class="modal fade" id="eliminar_pasiente_s{{$paciente->id}}"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">ELIMINAR PACIENTE</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" >
+<form method="POST" action="{{url('/eliminar_paciente_s')}}">
+  @csrf
+        <p style="font-size: 30px; text-align: center; font-weight: bold;">¿ESTAS SEGURO DE ELIMINAR?</p>
+        <div style="text-align: center;">
+          <label style="font-size: 20px; text-align: center; font-weight: bold;">PACIENTE:</label>
+          <label style="font-size: 20px; text-align: center; font-weight: bold; color: red;">{{$paciente->nombre}} {{$paciente->apellido_pat}} {{$paciente->apellido_mat}}</label>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-danger" id="id_pasiente_eliminar_s" value="{{$paciente->id}}" name="id_pasiente_eliminar_s">ELIMINAR</button>
+</form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <!--ver historial -->
@@ -207,12 +275,16 @@ input[type=number]::-webkit-outer-spin-button {
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLongTitle">ASIGNAR/REASIGNAR PACIENTE</h3>
+        <h3 class="modal-title" id="exampleModalLongTitle">ASIGNAR/REASIGNAR</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body" >
+        <div style="text-align: center;">
+          <label style="font-size: 20px; text-align: center; font-weight: bold;">PACIENTE:</label>
+          <label style="font-size: 20px; text-align: center; font-weight: bold; color: red;" id="text_nombre"></label>
+        </div>
         
 <form method="POST" action="{{url('/guardar_asignacion')}}">
   @csrf
@@ -301,12 +373,145 @@ input[type=number]::-webkit-outer-spin-button {
                   @endif
                   @endforeach
                 </td>
-                <td style="text-align: center;">horario</td>
-                <td style="text-align: center;">
-                  <button class="btn btn-primary">ASIGNAR HORARIO</button>
-                  <button class="btn btn-danger">ELIMINAR</button>
+                <td style="text-align: center; ">
+                  <div style="text-align: center;">
+                    <label style="font-size: 20px; text-align: center; font-weight: bold; font-size: 15px;">DIAS:</label>
+                    <label style="font-size: 20px; text-align: center; font-weight: bold; color: red; font-size: 15px;">{{$medico->dia_inicio}} -- {{$medico->dia_final}}</label><br>
+                    <label style="font-size: 20px; text-align: center; font-weight: bold; font-size: 15px;">HORAS:</label>
+                    <label style="font-size: 20px; text-align: center; font-weight: bold; color: red; font-size: 15px;">{{$medico->hora_inicio}} -- {{$medico->hora_final}}</label>
+                  </div>
                 </td>
-              </tr>  
+                <td style="text-align: center;">
+                  <button class="btn btn-primary" data-toggle="modal" data-target="#horario_medico{{$medico->id}}">ASIGNAR HORARIO</button>
+                </td>
+              </tr>
+
+<!--horario medico -->
+<div class="modal fade" id="horario_medico{{$medico->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered" role="document" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">HORARIO</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<form method="POST" action="{{url('/guardar_horario_medico')}}">
+  @csrf
+        <div style="text-align: center;">
+          <label style="font-size: 20px; text-align: center; font-weight: bold;">MEDICO:</label>
+          <label style="font-size: 20px; text-align: center; font-weight: bold; color: red;">{{$medico->nombre}} {{$medico->apellido_pat}} {{$medico->apellido_mat}}</label>
+        </div>
+        <div class="row">
+          <label style="width: 100%; text-align: center; font-weight: bold; font-size: 25px;">DIAS</label>
+          <div class="col-md-6">
+            <label>DIA INICIAL</label>
+            <select class="form-control" name="dia_i">
+              @if($medico->dia_inicio=="Lunes")
+              <option selected>Lunes</option>
+              @else
+              <option>Lunes</option>
+              @endif
+              @if($medico->dia_inicio=="Martes")
+              <option selected>Martes</option>
+              @else
+              <option>Martes</option>
+              @endif
+              @if($medico->dia_inicio=="Miercoles")
+              <option selected>Miercoles</option>
+              @else
+              <option>Miercoles</option>
+              @endif
+              @if($medico->dia_inicio=="Jueves")
+              <option selected>Jueves</option>
+              @else
+              <option>Jueves</option>
+              @endif
+              @if($medico->dia_inicio=="Viernes")
+              <option selected>Viernes</option>
+              @else
+              <option>Viernes</option>
+              @endif
+              @if($medico->dia_inicio=="Sabado")
+              <option selected>Sabado</option>
+              @else
+              <option>Sabado</option>
+              @endif
+              @if($medico->dia_inicio=="Domingo")
+              <option selected>Domingo</option>
+              @else
+              <option>Domingo</option>
+              @endif
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label>DIA TERMINO</label>
+            <select class="form-control" name="dia_f">
+              @if($medico->dia_final=="Lunes")
+              <option selected>Lunes</option>
+              @else
+              <option>Lunes</option>
+              @endif
+              @if($medico->dia_final=="Martes")
+              <option selected>Martes</option>
+              @else
+              <option>Martes</option>
+              @endif
+              @if($medico->dia_final=="Miercoles")
+              <option selected>Miercoles</option>
+              @else
+              <option>Miercoles</option>
+              @endif
+              @if($medico->dia_final=="Jueves")
+              <option selected>Jueves</option>
+              @else
+              <option>Jueves</option>
+              @endif
+              @if($medico->dia_final=="Viernes")
+              <option selected>Viernes</option>
+              @else
+              <option>Viernes</option>
+              @endif
+              @if($medico->dia_final=="Sabado")
+              <option selected>Sabado</option>
+              @else
+              <option>Sabado</option>
+              @endif
+              @if($medico->dia_final=="Domingo")
+              <option selected>Domingo</option>
+              @else
+              <option>Domingo</option>
+              @endif
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <label style="width: 100%; text-align: center; font-weight: bold; font-size: 25px;">HORAS</label>
+          <div class="col-md-6">
+            <label>HORA INICIAL</label>
+            <input type="time" class="form-control" name="hora_i" value="{{$medico->hora_inicio}}">
+          </div>
+          <div class="col-md-6">
+            <label>HORA TERMINO</label>
+            <input type="time" class="form-control" name="hora_f" value="{{$medico->hora_final}}">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="id_medico" value="{{$medico->id}}">
+        <button class="btn btn-success">GUARDAR</button>
+</form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
             @endforeach
             </tbody>      
           </table>
@@ -314,6 +519,17 @@ input[type=number]::-webkit-outer-spin-button {
           </div>
       </div> 
 </div>
+
+@if(Session::get('message')=="Horario Agregado con éxito")
+<script type="text/javascript">
+  document.getElementById("profile-CPA").classList.remove("active");
+  document.getElementById("profileCPA").classList.remove("active");
+  document.getElementById("profileCPA").classList.remove("show");
+  document.getElementById("profile-CME").classList.add("active");
+  document.getElementById("profileCME").classList.add("active");
+  document.getElementById("profileCME").classList.add("show");
+</script>
+@endif
 
 
 @stop
@@ -337,6 +553,26 @@ input[type=number]::-webkit-outer-spin-button {
   });
   function pasar_id($dato){
     document.getElementById("id_trapaso").value=$dato;
+    document.getElementById("text_nombre").innerHTML=null;
+    $.ajax({
+        url: "{{url('/buscar_paciente')}}"+'/'+$dato,
+        dataType: "json",
+        //context: document.body
+      }).done(function(result) {
+        //$( this ).addClass( "done" );
+        console.log(result);
+
+      if(result.length==null){
+
+        document.getElementById("text_nombre").innerHTML=null;
+
+      }else{
+        document.getElementById("text_nombre").innerHTML=result[0].nombre+' '+result[0].apellido_pat+' '+result[0].apellido_mat;
+         
+      }
+        
+      });
+    
   }
 
   $( '#especialidad' ).change(function( event ) {

@@ -32,4 +32,14 @@ class BusquedasController extends Controller
          $result=DB::table('cat_procedimiento_costo')->where('id',$id)->get();
          return json_encode($result);
     }
+     public function buscar_paciente($id)
+     {
+          $result=DB::table('pacientes')->where('id',$id)->get();
+          return json_encode($result);
+     }
+     public function buscar_aseguradora($id)
+     {
+          $result=DB::table('cat_aseguradoras')->where('id',$id)->get();
+          return json_encode($result);
+     }
 }

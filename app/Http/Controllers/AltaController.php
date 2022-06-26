@@ -14,11 +14,12 @@ class AltaController extends Controller
 
     public function vista_alta(){
         $pacientes=DB::table("pacientes")->select("*")->get();
+        $pacientes_asignaciones=DB::table("pacientes_asignaciones")->select("*")->get();
         $medicos=DB::table("medicos")->select("*")->get();
         $especialidades=DB::table("cat_especialidades")->select("*")->get();
         $areas=DB::table("cat_areas")->select("*")->get();
         $paises=DB::table("paises")->select("*")->get();
-        return view("alta.dar_de_alta",compact('pacientes','medicos','especialidades','areas','paises'));
+        return view("alta.dar_de_alta",compact('pacientes','medicos','especialidades','areas','paises','pacientes_asignaciones'));
     }
     public function guardar_paciente(Request $request){
 
@@ -133,7 +134,11 @@ class AltaController extends Controller
             "nombre"=>$request['nombre'],
             "apellido_pat"=>$request['ape_pat'],
             "apellido_mat"=>$request['ape_mat'],
-            "id_especialidad"=>$request['especialidad']
+            "id_especialidad"=>$request['especialidad'],
+            "dia_inicio"=>"Lunes",
+            "dia_final"=>"Domingo",
+            "hora_inicio"=>"07:00:00",
+            "hora_final"=>"22:00:00"
         ]);
 
         return redirect()->back()->with(['message' => 'Medico Guardado con éxito', 'color' => 'success']);

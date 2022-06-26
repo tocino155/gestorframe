@@ -34,8 +34,11 @@
         <img src="{{url('/archivos_pacientes_ingreso'.'/'.$paciente->foto)}}" width="130px" height="139px" style="padding-top: 99px; padding-left: 43px; position: absolute;">
         <p style="font-weight: bold; padding-top: 105px;  padding-left: 350px; position: absolute;">{{$paciente->nombre}} {{$paciente->apellido_pat}} {{$paciente->apellido_mat}}</p>
         <p style="font-weight: bold; padding-top: 143px;  padding-left: 330px; position: absolute;">{{$paciente->fecha_ingreso}}</p>
+        <div style="font-weight: bold; margin-top: 675px;  margin-left: 175px; position: absolute; width: 880px; height: 50px; word-wrap: break-word;">
+            {{$paciente->observaciones}}
+        </div>
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <table style="text-align: center; padding-left: 45px; " >
+        <table style="text-align: center; margin-left: 45px; " >
             <tr>
                 <th style="width: 250px; " ></th>
                 <th style="width: 252px; " ></th>
@@ -44,28 +47,28 @@
             </tr>
             @foreach($pacientes_asignaciones as $paciente_asi)
             <tr>
-                <td>
+                <td style="font-size: 14px;">
                     @foreach($areas as $area)
                     @if($area->Especialidad==$paciente_asi->id_especialidad)
                     {{$area->Area}}
                     @endif
                     @endforeach
                 </td>
-                <td>
+                <td style="font-size: 14px;">
                     @foreach($especialidades as $especialidad)
                     @if($especialidad->id==$paciente_asi->id_especialidad)
                     {{$especialidad->Especialidad}}
                     @endif
                     @endforeach
                 </td>
-                <td>
+                <td style="font-size: 14px;">
                     @foreach($medicos as $medico)
                     @if($medico->id==$paciente_asi->id_medico)
                     {{$medico->nombre}} {{$medico->apellido_pat}} {{$medico->apellido_mat}}
                     @endif
                     @endforeach
                 </td>
-                <td>
+                <td style="font-size: 14px;">
                     @foreach($procedimientos as $procedimiento)
                     @if($procedimiento->id==$paciente_asi->id_procedimiento)
                     {{$procedimiento->Procedimiento}}

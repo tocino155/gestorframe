@@ -21,6 +21,7 @@ class CreatePacientesTable extends Migration
             $table->date("fecha_nacimiento")->nullable();
             $table->date("fecha_ingreso")->nullable();
             $table->date("fecha_salida")->nullable();
+            $table->date("fecha_pago")->nullable();
             $table->string("domicilio")->nullable();
             $table->BigInteger("id_pais")->nullable();
             $table->BigInteger("telefono")->nullable();
@@ -30,6 +31,7 @@ class CreatePacientesTable extends Migration
             $table->string("colonia")->nullable();
             $table->string("cp")->nullable();
             $table->string("observaciones")->nullable();
+            $table->string("observaciones_aseguradora")->nullable();
             $table->string("foto")->nullable();
             $table->string("ATE_clinicos")->nullable();
             $table->unsignedBigInteger("id_estatus")->nullable();

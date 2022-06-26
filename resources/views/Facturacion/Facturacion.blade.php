@@ -14,8 +14,6 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
 
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
 <style type="text/css">
@@ -33,6 +31,19 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
+  .visible_on{
+    display: block;
+    position: fixed;
+    background: white;
+    border-radius: 15px;
+    width: auto;
+   }
+  .visible_off{
+    display: none;
+  }
+  .igual{
+     width: 230px;
+   }
 
 </style>
 
@@ -49,45 +60,125 @@ input[type=number]::-webkit-outer-spin-button {
 <br>
 <div class="card">
   <div class="card-body">
-<div class="table-responsive">
-   
-
-<table class="table" style="font-weight: bold;">
-            <thead class="thead-dark">
-              <tr>
-                <th style="text-align: center;">TURNO</th>
-                <th style="text-align: center;">NOMBRE</th>
-                <th style="text-align: center;">ASEGURADORA</th>
-                <th style="text-align: center;">DESCUENTO</th>
-                <th style="text-align: center;">IMPORTE</th>
-                <th style="text-align: center;">TOTAL</th>
-                <th style="text-align: center;">OPCIONES</th>
-              </tr>
-            </thead>
-            <tbody>  
+    <br><br>
+    <div class="table-responsive">
+      <table class="table" style="font-weight: bold;">
+        <thead class="thead-dark">
           <tr>
-            <td style="text-align: center;"></td> 
-            <td style="text-align: center;"></td>  
-            <td style="text-align: center;"></td> 
-            <td style="text-align: center;"></td> 
-            <td style="text-align: center;"></td> 
-            <td style="text-align: center;"></td> 
+            <th style="text-align: center;">TURNO</th>
+            <th style="text-align: center;">NOMBRE</th>
+            <th style="text-align: center;">ASEGURADORA</th>
+            <th style="text-align: center;">DESCUENTO</th>
+            <th style="text-align: center;">IMPORTE</th>
+            <th style="text-align: center;">TOTAL</th>
+            <th style="text-align: center;">OPCIONES</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach($pacientes as $paciente)
+          <?php $descuento=0; ?>
+          <?php $suma=0; $total=0; $total2=0; $porcentaje=0;?>  
+          <tr class="marca">
+            <td style="text-align: center;">turno</td> 
+            <td style="text-align: center;">{{$paciente->nombre}} {{$paciente->apellido_pat}} {{$paciente->apellido_mat}}</td>  
             <td style="text-align: center;">
-        <button class="btn btn-primary">TICKET</button>
-        <button class="btn btn-info">ASIGNAR ESTATUS DE PAGADO</button>
-        <button class="btn" style="background:pink; color:white;" data-toggle="modal" data-target="#aseguradora">ASEGURADORA</button>
+              @if($paciente->id_aseguradora!=null)
+              @foreach($aseguradoras as $aseguradora)
+              @if($aseguradora->id==$paciente->id_aseguradora)
+              {{$aseguradora->Aseguradora}}
+              <?php $descuento=$aseguradora->Porcentaje; ?>
+              @endif
+              @endforeach
+              @else
+              <p>sin aseguradora</p>
+              @endif
             </td> 
+            <td style="text-align: center;">{{$descuento}}%</td> 
+            @foreach($pacientes_asignaciones as $paciente_asi)
+            @foreach($procedimientos as $procedimiento)
+            @if($procedimiento->id==$paciente_asi->id_procedimiento && $paciente_asi->id_paciente==$paciente->id)
+            <?php $suma+=$procedimiento->Costo; ?>
+            @endif
+            @endforeach
+            @endforeach
+            @foreach($aseguradoras as $aseguradora)
+            @if($aseguradora->id==$paciente->id_aseguradora)
+            <?php $porcentaje=$aseguradora->Porcentaje;?>
+            @endif
+            @endforeach
+            <?php $total=($suma*$porcentaje)/100; $total2=$suma-$total;?>
+            <td style="text-align: center;">$ {{$suma}}</td> 
+            <td style="text-align: center;">$ {{$total2}}</td> 
+            <td style="text-align: center;">
+              <div id="menu_opciones{{$paciente->id}}" class="visible_off " style=" padding: 10px; background: #DBDBDB;">
+                  <br>
+                  <button class="btn btn-primary igual"  style="margin-bottom: 10px;" data-toggle="modal" data-target="#factura_pasiente{{$paciente->id}}">TICKET</button><br>
+                  <button class="btn btn-info igual"  style="margin-bottom: 10px;" data-toggle="modal" data-target="#pagado_paciente{{$paciente->id}}">ASIGNAR ESTATUS DE PAGADO</button><br>
+                  <button class="btn igual" style="background:pink; color:white;" data-toggle="modal" data-target="#aseguradora{{$paciente->id}}" onclick="pasar_id_aseguradora{{$paciente->id}}({{$paciente->id_aseguradora}})">ASEGURADORA</button><br><br>
+              </div>
+              @if($paciente->id_estatus!=5)
+              <button class="btn btn-success boton_interno" id="menu_M{{$paciente->id}}" style="font-weight: bold; font-size: 20px;">+</button>
+              @else
+              <button id="menu_M{{$paciente->id}}" style="display: none;">+</button>
+              <p>sin acciones por ser eliminado</p>
+              @endif
+              
+            </td> 
+          </tr>
 
-                </tr>
-            </tbody>      
-          </table>
+<!--ver factura -->
+<div class="modal fade" id="factura_pasiente{{$paciente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">FACTURA DEL PACIENTE</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <embed type="application/pdf" src="{{url('/generar_factura'.'/'.$paciente->id)}}" style="width:100%; height: 600px;">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+      </div>
+    </div>
+  </div>
+</div>          
 
+
+<!--pagado paciente -->
+<div class="modal fade" id="pagado_paciente{{$paciente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog  modal-dialog-centered" role="document" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">ASIGNAR PAGO</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<form method="POST" action="{{url('/estatus_pago'.'/'.$paciente->id)}}">
+  @csrf
+        <p style="font-size: 25px; text-align: center; font-weight: bold;">¿ESTAS SEGURO QUE EL PACIENTE YA PAGO?</p>
+        <div style="text-align: center;">
+          <label style="font-size: 20px; text-align: center; font-weight: bold;">PACIENTE:</label>
+          <label style="font-size: 20px; text-align: center; font-weight: bold; color: red;">{{$paciente->nombre}} {{$paciente->apellido_pat}} {{$paciente->apellido_mat}}</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning">PAGADO</button>
+</form>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">CERRAR</button>
+      </div>
+    </div>
+  </div>
 </div>
-</div>
-</div>
+
+
 
 <!--MODAL ASIGNAR Y REASGINAR -->
-<div class="modal fade" id="aseguradora" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="aseguradora{{$paciente->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -97,43 +188,53 @@ input[type=number]::-webkit-outer-spin-button {
         </button>
       </div>
       <div class="modal-body" >
-<form method="POST" action="{{url('')}}">
+        <div style="text-align: center;">
+          <label style="font-size: 20px; text-align: center; font-weight: bold;">PACIENTE:</label>
+          <label style="font-size: 20px; text-align: center; font-weight: bold; color: red;">{{$paciente->nombre}} {{$paciente->apellido_pat}} {{$paciente->apellido_mat}}</label>
+        </div>
+<form method="POST" action="{{url('/asignar_aseguradora')}}">
   @csrf
-
         <div class="row">
           <div class="col-md-12">
             <label>ASEGURADORA</label>
-            <select id="buscadorAS" class="form-control">
-              <option>valorX</option>
+            <select id="buscadorAS" name="aseguradora" class="form-control" onchange="cambio_valor{{$paciente->id}}(this.value);">
+              <option value="" selected disabled>.:SELECCONA:.</option>
+              @foreach($aseguradoras as $aseguradora)
+              @if($aseguradora->id==$paciente->id_aseguradora)
+              <option selected value="{{$aseguradora->id}}">{{$aseguradora->Aseguradora}}</option>
+              @else
+              <option value="{{$aseguradora->id}}">{{$aseguradora->Aseguradora}}</option>
+              @endif
+              @endforeach
             </select>
           </div>
       </div>
-<br>
-<div class="row">
+      <br>
+        <div class="row">
           <div class="col-md-7">
             <label>DESCUENTO ESTABLECIDO POR LA ASEGURADORA</label>
-            <input type="text" name="" class="form-control">
+            <input type="text" name="descuento" class="form-control" id="descuento{{$paciente->id}}" readonly>
             
           </div>
           <div class="col-md-5">
             <label>FECHA DE PAGO POR ASEGURADORA</label>
-            <input type="date" name="fecha" class="form-control" required>
+            @if($paciente->fecha_pago==null)
+            <input type="date" name="fecha_pago" class="form-control" required value="<?php echo date('Y-m-d') ?>">
+            @else
+            <input type="date" name="fecha_pago" class="form-control" required value="{{$paciente->fecha_pago}}">
+            @endif
           </div>
-</div>
+        </div>
 
         <br>
         <div class="row">
           <div class="col-md-12">
             <label>OBSERVACIONES</label>
-            <textarea class="form-control" onkeyup="this.value = this.value.toUpperCase();" required></textarea>
+            <textarea class="form-control" name="observaciones" required>{{$paciente->observaciones_aseguradora}}</textarea>
           </div>
-      </div>
-          
-
-          
-          
+        </div>
       <div class="modal-footer">
-        <input type="hidden" name="id_recibo_A" value="">
+        <input type="hidden" name="id_paciente" value="{{$paciente->id}}">
         <button class="btn btn-primary" id="folio">GUARDAR</button>
 </form>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">CANCELAR</button>
@@ -145,17 +246,85 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 
+
+
+
+<script type="text/javascript">
+
+  menu_M{{$paciente->id}}.addEventListener("click",function(){
+        var top_y=this.getBoundingClientRect() //odtenemos el valor de la posicion del boton
+        menu_opciones{{$paciente->id}}.style.top=top_y.top-40+"px";
+        menu_opciones{{$paciente->id}}.style.left=top_y.left-150+"px";
+        menu_opciones{{$paciente->id}}.classList.toggle("visible_on");
+        menu_opciones{{$paciente->id}}.classList.toggle("visible_off");
+    });
+  menu_opciones{{$paciente->id}}.addEventListener("mouseleave",function(){
+        menu_opciones{{$paciente->id}}.classList.toggle("visible_on");
+        menu_opciones{{$paciente->id}}.classList.toggle("visible_off");
+    });
+
+  function pasar_id_aseguradora{{$paciente->id}}($dato){
+    $.ajax({
+        url: "{{url('/buscar_aseguradora')}}"+'/'+$dato,
+        dataType: "json",
+        //context: document.body
+      }).done(function(result) {
+        //$( this ).addClass( "done" );
+        console.log(result);
+
+      if(result[0]==null){
+
+        document.getElementById("descuento{{$paciente->id}}").value=null;
+
+      }else{
+        document.getElementById("descuento{{$paciente->id}}").value=result[0].Porcentaje;
+         
+      }
+        
+      });
+  }
+  function cambio_valor{{$paciente->id}}($dato){
+    $.ajax({
+        url: "{{url('/buscar_aseguradora')}}"+'/'+$dato,
+        dataType: "json",
+        //context: document.body
+      }).done(function(result) {
+        //$( this ).addClass( "done" );
+        console.log(result);
+
+      if(result.length==null){
+
+        document.getElementById("descuento{{$paciente->id}}").value=null;
+
+      }else{
+        document.getElementById("descuento{{$paciente->id}}").value=result[0].Porcentaje+"%";
+         
+      }
+        
+      });
+  }
+
+</script>
+
+
+
+          @endforeach
+        </tbody>      
+      </table>
+
+    </div>
+</div>
+</div>
+
+
+
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
+
 
 @section('js')
 <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
     $('.table').DataTable({

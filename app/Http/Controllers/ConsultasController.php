@@ -58,5 +58,31 @@ public function __construct(){
         return $pdf->stream($nombre_pdf);
     }
 
+    public function dar_de_alta_paciente(Request $request){
+
+        DB::table("pacientes")->where("id",$request['id_paciente_alta'])->update([
+            "id_estatus"=>4,
+            "fecha_salida"=>date("Y-m-d")
+        ]);
+        return redirect()->back()->with(['message' => 'Dado de Alta con éxito', 'color' => 'success']);
+    }
+
+    public function eliminar_paciente_s(Request $request){
+
+        DB::table("pacientes")->where("id",$request['id_pasiente_eliminar_s'])->update([
+            "id_estatus"=>5
+        ]);
+        return redirect()->back()->with(['message' => 'Eliminado con éxito', 'color' => 'danger']);
+    }
+    public function guardar_horario_medico(Request $request){
+
+        DB::table("medicos")->where("id",$request['id_medico'])->update([
+            "dia_inicio"=>$request['dia_i'],
+            "dia_final"=>$request["dia_f"],
+            "hora_inicio"=>$request['hora_i'],
+            "hora_final"=>$request['hora_f']
+        ]);
+        return redirect()->back()->with(['message' => 'Horario Agregado con éxito', 'color' => 'success']);
+    }
 
 }
