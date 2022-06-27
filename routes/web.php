@@ -18,6 +18,9 @@ use App\Http\Controllers\CatalogosController;
 */
 
 Route::get('/', function () {
+
+
+
     return view('auth.login');
 });
 
@@ -29,12 +32,14 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dash', function () {
-        return view('dash.index');
+
+$pacientes=DB::table("pacientes")->select("*")->get();
+$pacientes_asignaciones=DB::table("pacientes_asignaciones")->select("*")->get();
+$especialidades=DB::table("cat_especialidades")->select("*")->get();
+$areas=DB::table("cat_areas")->select("*")->get();
+
+        return view('dash.index',compact('pacientes','pacientes_asignaciones','especialidades','areas'));
     })->name('dash')->middleware("auth");
-
-
-
-
 
 
 });
@@ -78,14 +83,11 @@ Route::post('/Guardar_area',[CatalogosController::class,'save_area']);
 Route::delete('/Eliminar_area/{id}',[CatalogosController::class,'delete_area']);
 Route::put('/Editar_area/{id}',[CatalogosController::class,'update_area']);
 
-
-
 //aseguradora
 Route::get('/Aseguradoras', [CatalogosController::class,'VerAseguradoras']);
 Route::post('/Guardar_aseguradora',[CatalogosController::class,'save_asegu']);
 Route::delete('/Eliminar_aseguradora/{id}',[CatalogosController::class,'delete_asegu']);
 Route::put('/Editar_aseguradora/{id}',[CatalogosController::class,'update_asegu']);
-
 
 //especialidad
 Route::get('/Especialidad', [CatalogosController::class,'VerEspecialidad']);

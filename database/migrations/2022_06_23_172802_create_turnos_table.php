@@ -16,12 +16,11 @@ class CreateTurnosTable extends Migration
         Schema::create('turnos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("id_paciente")->nullable();
-            $table->unsignedBigInteger("id_medico")->nullable();
+            $table->unsignedBigInteger("id_area")->nullable();
             $table->date("fecha")->nullable();
             $table->string("estado")->nullable();
-            $table->string("observaciones")->nullable();
             $table->foreign("id_paciente")->references("id")->on("pacientes")->onDelete("set null");
-            $table->foreign("id_medico")->references("id")->on("medicos")->onDelete("set null");
+            $table->foreign("id_area")->references("id")->on("cat_areas")->onDelete("set null");
             $table->timestamps();
         });
     }

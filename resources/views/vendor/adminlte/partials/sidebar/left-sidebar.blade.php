@@ -30,16 +30,50 @@
               </tr>
             </thead>
             <tbody> 
+            @foreach($pacientes_asignaciones as $paciente_asi)
+
+       @foreach ($pacientes as $paciente)
+        @if($paciente_asi->id_paciente == $paciente->id)
+        @if($paciente->id_estatus == '2')
                 <tr>
-                <td>
-                    CI-PED-RGP-01
+                <td style="text-align: center;">
+
+        @foreach ($especialidades as $espe)
+
+         @foreach ($areas as $area)
+        @if($paciente_asi->id_especialidad == $espe->id)
+        @if($espe->id == $area->Especialidad)
+           <?php echo strtoupper(substr($area->Area,0,2))."-";  ?>
+        @endif
+         @endif
+    @endforeach
+
+
+        @if($paciente_asi->id_especialidad == $espe->id)
+           <?php echo strtoupper(substr($espe->Especialidad,0,3))."-";  ?>
+        @endif
+    @endforeach
+
+        @foreach ($pacientes as $paciente)
+        @if($paciente_asi->id_paciente == $paciente->id)
+           <?php echo strtoupper(substr($paciente->nombre,0,1)).strtoupper(substr($paciente->apellido_pat,0,1)).strtoupper(substr($paciente->apellido_mat,0,1))."-";  ?>
+        @endif
+
+    @endforeach
+
+    @foreach ($pacientes as $paciente)
+        @if($paciente_asi->id_paciente == $paciente->id)
+           {{$paciente->id}}
+        @endif
+
+    @endforeach
+                    
                 </td>
                 </tr>
-                <tr>
-                <td>
-                    ES-DER-CBH-03
-                </td>
-                </tr>
+                @endif
+                @endif
+    @endforeach
+            @endforeach
 
             </tbody>  
             </table>    
@@ -75,9 +109,51 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td style="text-align: center;">CI-PED-RGP-01</td>
-                    </tr>
+          @foreach($pacientes_asignaciones as $paciente_asi)
+
+       @foreach ($pacientes as $paciente)
+        @if($paciente_asi->id_paciente == $paciente->id)
+        @if($paciente->id_estatus == '2')
+                <tr>
+                <td style="text-align: center;">
+
+        @foreach ($especialidades as $espe)
+
+         @foreach ($areas as $area)
+        @if($paciente_asi->id_especialidad == $espe->id)
+        @if($espe->id == $area->Especialidad)
+           <?php echo strtoupper(substr($area->Area,0,2))."-";  ?>
+        @endif
+         @endif
+    @endforeach
+
+
+        @if($paciente_asi->id_especialidad == $espe->id)
+           <?php echo strtoupper(substr($espe->Especialidad,0,3))."-";  ?>
+        @endif
+    @endforeach
+
+        @foreach ($pacientes as $paciente)
+        @if($paciente_asi->id_paciente == $paciente->id)
+           <?php echo strtoupper(substr($paciente->nombre,0,1)).strtoupper(substr($paciente->apellido_pat,0,1)).strtoupper(substr($paciente->apellido_mat,0,1))."-";  ?>
+        @endif
+
+    @endforeach
+
+    @foreach ($pacientes as $paciente)
+        @if($paciente_asi->id_paciente == $paciente->id)
+           {{$paciente->id}}
+        @endif
+
+    @endforeach
+                    
+                </td>
+                </tr>
+                @endif
+                @endif
+    @endforeach
+            @endforeach
+               
                 </tbody>
             </table>
         </div>
