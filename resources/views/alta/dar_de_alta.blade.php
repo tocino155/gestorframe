@@ -85,7 +85,7 @@
       <div class="tab-pane fade show active" id="profileAC" role="tabpanel" aria-labelledby="profile-tabAC">
 
         <br><br>
-        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_pasiente">NUEVO PACIENTE</button>
+        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_pasiente" id="p_c">NUEVO PACIENTE</button>
         <br><br><br>
         <div class="table-responsive">
           <table class="table" style="font-weight: bold;">
@@ -399,7 +399,7 @@
 
       <div class="tab-pane fade" id="profileAB" role="tabpanel" aria-labelledby="profile-tabAB">
         <br><br>
-        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_doctor">NUEVO MEDICO</button>
+        <button class="btn btn btn-outline-primary" data-toggle="modal" data-target="#agregar_doctor" id="m_c">NUEVO MEDICO</button>
         <br><br><br>
         <div class="table-responsive">
           <table class="table" style="font-weight: bold;">
@@ -800,6 +800,27 @@
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
     $('.js-example-basic-multiple').select2();
+});
+
+$(document).ready(function(){
+  const valores = window.location.search;
+
+  //Mostramos los valores en consola:
+  console.log(valores);
+
+  //Creamos la instancia
+  const urlParams = new URLSearchParams(valores);
+
+  //Accedemos a los valores
+  var bot = urlParams.get('bot_result');
+  if(bot!=null && bot=="active_modal"){
+
+    document.getElementById("p_c").click();
+
+  }else if(bot!=null && bot=="active_modal_medi"){
+    document.getElementById("profile-tabaAB").click();
+    document.getElementById("m_c").click();
+  }
 });
 
 </script>
