@@ -14,9 +14,11 @@ class CatalogosController extends Controller
 //area
 
     public function VerAreas(){
+    $pacientes=DB::table("pacientes")->select("*")->get();
+    $pacientes_asignaciones=DB::table("pacientes_asignaciones")->select("*")->get();
     $areas=DB::table('cat_areas')->select('*')->get();
     $especialidades=DB::table('cat_especialidades')->select('*')->get();
-    return view("Catalogos.Areas",compact('areas','especialidades'));
+    return view("Catalogos.Areas",compact('areas','especialidades','pacientes','pacientes_asignaciones'));
     }
 
     public function save_area(Request $request){
@@ -51,12 +53,14 @@ DB::table("cat_areas")->where('id',$id)->update([
         return redirect()->back()->with('msjdelete','El Area fue Actualizado con éxito', );
     }
 
-
-
 //aseguradora
     public function VerAseguradoras(){
+    $pacientes=DB::table("pacientes")->select("*")->get();
+    $pacientes_asignaciones=DB::table("pacientes_asignaciones")->select("*")->get();
+    $areas=DB::table('cat_areas')->select('*')->get();
+    $especialidades=DB::table('cat_especialidades')->select('*')->get();
 $aseguradoras=DB::table('cat_aseguradoras')->select('*')->get();
-        return view("Catalogos.Aseguradoras",compact('aseguradoras'));
+        return view("Catalogos.Aseguradoras",compact('aseguradoras','areas','especialidades','pacientes','pacientes_asignaciones'));
     }
 
      public function save_asegu(Request $request){
@@ -91,11 +95,13 @@ DB::table("cat_aseguradoras")->where('id',$id)->update([
         return redirect()->back()->with('msjdelete','La aseguradoras fue Actualizado con éxito', );
     }
 
-
 //especialidad
     public function VerEspecialidad(){
+   $pacientes=DB::table("pacientes")->select("*")->get();
+    $pacientes_asignaciones=DB::table("pacientes_asignaciones")->select("*")->get();
+    $areas=DB::table('cat_areas')->select('*')->get();
 $especialidades=DB::table('cat_especialidades')->select('*')->get();
-        return view("Catalogos.Especialidad",compact('especialidades'));
+        return view("Catalogos.Especialidad",compact('especialidades','areas','pacientes_asignaciones','pacientes'));
     }
 
      public function save_espe(Request $request){
@@ -125,15 +131,17 @@ $especialidades=DB::table('cat_especialidades')->select('*')->get();
             "Aforo"=>$request['aforo'],
 
         ]);
-        
-        return redirect()->back()->with('message','Especialidad Actualizada con éxito', );
+    return redirect()->back()->with('message','Especialidad Actualizada con éxito', );
     }
-
 
 //procediminetos
     public function VerProcedimientos(){
+$pacientes=DB::table("pacientes")->select("*")->get();
+$pacientes_asignaciones=DB::table("pacientes_asignaciones")->select("*")->get();
+$areas=DB::table('cat_areas')->select('*')->get();
+$especialidades=DB::table('cat_especialidades')->select('*')->get();
 $procedimiento=DB::table('cat_procedimiento_costo')->select('*')->get();
-        return view("Catalogos.Procedimientos",compact('procedimiento'));
+        return view("Catalogos.Procedimientos",compact('procedimiento','especialidades','areas','pacientes_asignaciones','pacientes'));
     }
 
      public function save_proce(Request $request){
@@ -166,5 +174,4 @@ $procedimiento=DB::table('cat_procedimiento_costo')->select('*')->get();
         
         return redirect()->back()->with('message','Procedimiento Actualizado con éxito', );
     }
-
 }
