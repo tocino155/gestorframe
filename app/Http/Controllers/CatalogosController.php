@@ -118,6 +118,20 @@ $especialidades=DB::table('cat_especialidades')->select('*')->get();
     }
 
    public function delete_espe($id){
+
+    $pacientes=DB::table("pacientes")->select("*")->get();
+    $pacientes_asignaciones=DB::table("pacientes_asignaciones")->select("*")->get();
+    $pacientes_asignaciones=$pacientes_asignaciones->unique("id_paciente");
+    
+    foreach ($pacientes_asignaciones as $paciente_asi) {
+        foreach ($pacientes as $paciente) {
+            if ($paciente->id==$paciente_asi->id_paciente) {
+                DB::table("pacientes")->where("id",$paciente->id)->update([
+                    "id_estatus"=>1
+                ]);
+            }
+        }
+    }
         
         DB::table('cat_especialidades')->delete($id);    
 

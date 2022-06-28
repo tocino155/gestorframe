@@ -36,8 +36,8 @@ class CreatePacientesTable extends Migration
             $table->string("ATE_clinicos")->nullable();
             $table->unsignedBigInteger("id_estatus")->nullable();
             $table->unsignedBigInteger("id_aseguradora")->nullable();
-            $table->foreign("id_estatus")->references("id")->on("cat_estatus");
-            $table->foreign("id_aseguradora")->references("id")->on("cat_aseguradoras");
+            $table->foreign("id_estatus")->references("id")->on("cat_estatus")->onDelete("set null");
+            $table->foreign("id_aseguradora")->references("id")->on("cat_aseguradoras")->onDelete("set null");
             $table->timestamps();
         });
     }

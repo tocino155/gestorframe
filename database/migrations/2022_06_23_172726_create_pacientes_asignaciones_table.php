@@ -21,7 +21,7 @@ class CreatePacientesAsignacionesTable extends Migration
             $table->string("observaciones")->nullable();
             $table->unsignedBigInteger("id_procedimiento")->nullable();
             $table->foreign("id_paciente")->references("id")->on("pacientes");
-            $table->foreign("id_especialidad")->references("id")->on("cat_especialidades")->onDelete("set null");
+            $table->foreign("id_especialidad")->references("id")->on("cat_especialidades")->onDelete("cascade");
             $table->foreign("id_medico")->references("id")->on("medicos")->onDelete("set null");
             $table->foreign("id_procedimiento")->references("id")->on("cat_procedimiento_costo")->onDelete("set null");
             $table->timestamps();

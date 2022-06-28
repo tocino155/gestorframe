@@ -17,7 +17,7 @@ class CreateCatAreasTable extends Migration
             $table->id();
             $table->string("Area")->nullable();
             $table->unsignedBigInteger("Especialidad")->nullable();
-            $table->foreign("Especialidad")->references("id")->on("cat_especialidades")->onDelete("set null");
+            $table->foreign("Especialidad")->references("id")->on("cat_especialidades")->onDelete("cascade");
         });
     }
 

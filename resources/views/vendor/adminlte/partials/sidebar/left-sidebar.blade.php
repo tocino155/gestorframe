@@ -31,6 +31,7 @@
                             </thead>
                             <tbody>
                             @foreach($pacientes as $paciente)
+                            <?php $area=null;$especialidad=null; ?>
                             @if($paciente->id_estatus==2)
                             <tr><td style="text-align: center;">
                             @foreach($pacientes_asignaciones as $paciente_asi)
@@ -42,7 +43,9 @@
                             @endforeach
                             @endif
                             @endforeach
+                            @if($area!=null)
                             <?php echo strtoupper(substr($area->Area,0,2))."-";  ?>
+                            @endif
                             @foreach($pacientes_asignaciones as $paciente_asi)
                             @if($paciente_asi->id_paciente==$paciente->id)
                             @foreach($especialidades as $especialidad)
@@ -52,7 +55,9 @@
                             @endforeach
                             @endif
                             @endforeach
-                            <?php echo strtoupper(substr($especialidad->Especialidad,0,3))."-"; ?>
+                            @if($especialidad!=null)
+                            <?php echo substr($especialidad->Especialidad,0,3)."-"; ?>
+                            @endif
                             <?php echo substr($paciente->nombre,0,1).substr($paciente->apellido_pat,0,1).substr($paciente->apellido_mat,0,1)."-";  ?>
                             {{$paciente->id}}
                             </td></tr>
@@ -94,6 +99,7 @@
                 </thead>
                 <tbody>
                     @foreach($pacientes as $paciente)
+                    <?php $area=null;$especialidad=null; ?>
                     @if($paciente->id_estatus==2)
                     <tr><td style="text-align: center;">
                     @foreach($pacientes_asignaciones as $paciente_asi)
@@ -105,7 +111,9 @@
                     @endforeach
                     @endif
                     @endforeach
+                    @if($area!=null)
                     <?php echo strtoupper(substr($area->Area,0,2))."-";  ?>
+                    @endif
                     @foreach($pacientes_asignaciones as $paciente_asi)
                     @if($paciente_asi->id_paciente==$paciente->id)
                     @foreach($especialidades as $especialidad)
@@ -115,7 +123,9 @@
                     @endforeach
                     @endif
                     @endforeach
+                    @if($especialidad!=null)
                     <?php echo substr($especialidad->Especialidad,0,3)."-"; ?>
+                    @endif
                     <?php echo substr($paciente->nombre,0,1).substr($paciente->apellido_pat,0,1).substr($paciente->apellido_mat,0,1)."-";  ?>
                     {{$paciente->id}}
                     </td>
