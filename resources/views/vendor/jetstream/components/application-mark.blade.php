@@ -4,4 +4,4 @@
 </svg>
 -->
 
-<img src="{{url('/imagenes/umbrella.gif')}}" width="15%" height="15%">
+<img src="{{url('/imagenes/umbrella2.gif')}}" width="15%" height="15%">
