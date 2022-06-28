@@ -52,7 +52,7 @@
                             @endforeach
                             @endif
                             @endforeach
-                            <?php echo substr($especialidad->Especialidad,0,3)."-"; ?>
+                            <?php echo strtoupper(substr($especialidad->Especialidad,0,3))."-"; ?>
                             <?php echo substr($paciente->nombre,0,1).substr($paciente->apellido_pat,0,1).substr($paciente->apellido_mat,0,1)."-";  ?>
                             {{$paciente->id}}
                             </td></tr>
