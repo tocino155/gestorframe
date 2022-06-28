@@ -820,6 +820,9 @@ $(document).ready(function(){
   }else if(bot!=null && bot=="active_modal_medi"){
     document.getElementById("profile-tabaAB").click();
     document.getElementById("m_c").click();
+
+  }else if(bot!=null && bot=="modal_medi"){
+    document.getElementById("profile-tabaAB").click();
   }
 });
 

@@ -77,7 +77,7 @@ input[type=number]::-webkit-outer-spin-button {
 <div class="card">
   <div class="card-body">
   <div><h3><center>AREAS</center></h3></div>  
-  <button class="btn btn-outline-primary" data-toggle="modal" data-target="#agrega_area">AGREGAR AREAS</button>
+  <button class="btn btn-outline-primary" data-toggle="modal" data-target="#agrega_area" id="p_c">AGREGAR AREAS</button>
 <div class="table-responsive">
 <br>
 
@@ -259,5 +259,22 @@ input[type=number]::-webkit-outer-spin-button {
     });
   });
 
+  $(document).ready(function(){
+  const valores = window.location.search;
+
+  //Mostramos los valores en consola:
+  console.log(valores);
+
+  //Creamos la instancia
+  const urlParams = new URLSearchParams(valores);
+
+  //Accedemos a los valores
+  var bot = urlParams.get('bot_result');
+  if(bot!=null && bot=="active_modal"){
+
+    document.getElementById("p_c").click();
+
+  }
+});
 </script>
 @stop

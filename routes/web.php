@@ -41,7 +41,6 @@ $areas=DB::table("cat_areas")->select("*")->get();
         return view('dash.index',compact('pacientes','pacientes_asignaciones','especialidades','areas'));
     })->name('dash')->middleware("auth");
 
-
 });
 
 

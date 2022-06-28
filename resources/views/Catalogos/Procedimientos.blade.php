@@ -77,7 +77,7 @@ input[type=number]::-webkit-outer-spin-button {
 <div class="card">
   <div class="card-body">
   <div><h3><center>PROCEDIMIENTOS</center></h3></div>  
-  <button class="btn btn-outline-primary" data-toggle="modal" data-target="#agrega_proce">AGREGAR PROCEDIMIENTOS</button>
+  <button class="btn btn-outline-primary" data-toggle="modal" data-target="#agrega_proce" id="p_c">AGREGAR PROCEDIMIENTOS</button>
 <div class="table-responsive">
 <br>
 
@@ -238,6 +238,30 @@ input[type=number]::-webkit-outer-spin-button {
        }
     });
   });
+
+  $(document).ready(function(){
+  const valores = window.location.search;
+
+  //Mostramos los valores en consola:
+  console.log(valores);
+
+  //Creamos la instancia
+  const urlParams = new URLSearchParams(valores);
+
+  //Accedemos a los valores
+  var bot = urlParams.get('bot_result');
+  if(bot!=null && bot=="active_modal"){
+
+    document.getElementById("p_c").click();
+
+  }else if(bot!=null && bot=="active_modal_medi"){
+    document.getElementById("profile-tabaAB").click();
+    document.getElementById("m_c").click();
+
+  }else if(bot!=null && bot=="modal_medi"){
+    document.getElementById("profile-tabaAB").click();
+  }
+});
 
 </script>
 @stop

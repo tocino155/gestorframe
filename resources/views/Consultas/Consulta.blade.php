@@ -645,5 +645,21 @@ input[type=number]::-webkit-outer-spin-button {
 
   });
 
+  $(document).ready(function(){
+  const valores = window.location.search;
+
+  //Mostramos los valores en consola:
+  console.log(valores);
+
+  //Creamos la instancia
+  const urlParams = new URLSearchParams(valores);
+
+  //Accedemos a los valores
+  var bot = urlParams.get('bot_result');
+  if(bot!=null && bot=="modal_medi"){
+    document.getElementById("profile-CME").click();
+  }
+});
+
 </script>
 @stop
