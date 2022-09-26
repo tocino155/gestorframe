@@ -15,6 +15,8 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+
+        <link rel="icon" type="image/jpg" href="{{url('favicon.ico')}}"/>
         
     </head>
     <body class=" font-sans antialiased" style="background: black;" >

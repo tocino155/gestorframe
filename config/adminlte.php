@@ -249,7 +249,7 @@ return [
             'route'  => 'dash',
 
         ],
-        ['header' => 'account_settings'],
+        ['header' => 'MODULOS'],
         [
             'text'       => 'Registros',
             'icon'       => 'fas fa-fw fa-plus-square',

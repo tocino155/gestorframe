@@ -134,11 +134,17 @@ input[type=number]::-webkit-outer-spin-button {
                           </td> 
                           <td style="text-align: center;">
                             <div id="menu_opciones{{$paciente->id}}" class="visible_off " style=" padding: 10px; background: #DBDBDB;">
+                                  <button class="close" type="button" onclick='menu_opciones{{$paciente->id}}.classList.remove("visible_on"); menu_opciones{{$paciente->id}}.classList.add("visible_off");'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
+                                    <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                  </svg>
+                                  </button>
                                   <br>
                                   @if($paciente->ATE_clinicos!=null)
-                                  <a href="{{url('/archivos_pacientes_ingreso'.'/'.$paciente->ATE_clinicos)}}" target="_blank" class="btn btn-primary igual" style="margin-bottom: 10px;">ANTECEDENTES CLINICOS</a><br>
+                                  <a href="{{url('/archivos_pacientes_ingreso'.'/'.$paciente->ATE_clinicos)}}" target="_blank" class="btn btn-primary igual" style="margin-bottom: 10px; margin-top: 10px;">ANTECEDENTES CLINICOS</a><br>
                                   @else
-                                  <p>sin archivo</p>
+                                  <p style=" margin-top: 10px;">sin archivo</p>
                                   @endif
                                   <button class="btn btn-primary igual" style="margin-bottom: 10px;"  data-toggle="modal" data-target="#historial_pasiente{{$paciente->id}}">GENERAR HISTORIA CLINICA</button><br>
                                   @if($paciente->id_estatus!=4)
@@ -255,12 +261,12 @@ input[type=number]::-webkit-outer-spin-button {
         var top_y=this.getBoundingClientRect() //odtenemos el valor de la posicion del boton
         menu_opciones{{$paciente->id}}.style.top=top_y.top-40+"px";
         menu_opciones{{$paciente->id}}.style.left=top_y.left-150+"px";
-        menu_opciones{{$paciente->id}}.classList.toggle("visible_on");
-        menu_opciones{{$paciente->id}}.classList.toggle("visible_off");
+        menu_opciones{{$paciente->id}}.classList.add("visible_on");
+        menu_opciones{{$paciente->id}}.classList.remove("visible_off");
     });
   menu_opciones{{$paciente->id}}.addEventListener("mouseleave",function(){
-        menu_opciones{{$paciente->id}}.classList.toggle("visible_on");
-        menu_opciones{{$paciente->id}}.classList.toggle("visible_off");
+        menu_opciones{{$paciente->id}}.classList.remove("visible_on");
+        menu_opciones{{$paciente->id}}.classList.add("visible_off");
     });
 
 

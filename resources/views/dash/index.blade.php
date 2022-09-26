@@ -128,7 +128,7 @@
             document.getElementById("texto").value=null;
             document.getElementById("mensajes").insertAdjacentHTML('beforeend','<div style="border: solid; border-color: #A2A2A2; padding: 10px; border-radius: 10px; margin-left: 80px; margin-right: 100px;"><p style="font-weight: bold;">Ve al apartado de "Registros" y cada una de las filas tiene botones tanto "EDITAR" como "ELIMINAR" cada fila corresponde a un medico y los botones tambien.</p><br><a class="btn btn-outline-info" href="{{url('/alta/?bot_result=modal_medi')}}">Registros</a></div><img src="{{url('/imagenes/tesoni_c.png')}}" width="45" height="45" style="margin-top: -20px; margin-left: 25px;">');
 
-        }else if(pregunta.toLowerCase().indexOf("historia")!==-1 && pregunta.toLowerCase().indexOf("clinina")!==-1){
+        }else if(pregunta.toLowerCase().indexOf("historia")!==-1 && pregunta.toLowerCase().indexOf("clínina")!==-1){
 
             document.getElementById("texto").value=null;
             document.getElementById("mensajes").insertAdjacentHTML('beforeend','<div style="border: solid; border-color: #A2A2A2; padding: 10px; border-radius: 10px; margin-left: 80px; margin-right: 100px;"><p style="font-weight: bold;">En el apartado de "Consultas" cada fila corresponde a un paciente y hay un boton que despliega un menu donde esta la opcion de "GENERAR HISTORIA CLINICA".<br>Para esto ya debe existir el paciente.</p><br><a class="btn btn-outline-info" href="{{url('/consultas')}}">Consultas</a></div><img src="{{url('/imagenes/tesoni_c.png')}}" width="45" height="45" style="margin-top: -20px; margin-left: 25px;">');
@@ -173,7 +173,7 @@
             document.getElementById("texto").value=null;
              document.getElementById("mensajes").insertAdjacentHTML('beforeend','<div style="border: solid; border-color: #A2A2A2; padding: 10px; border-radius: 10px; margin-left: 80px; margin-right: 100px;"><p style="font-weight: bold;">En el apartado de "Catalogos" puedes ir a "Procedimiento" dentro de este modulo puedes agregar una procedimiento, tambien editar y eliminar la misma</p><br><a class="btn btn-outline-info" href="{{url('/Procedimientos/?bot_result=active_modal')}}">Procedimiento</a></div><img src="{{url('/imagenes/tesoni_c.png')}}" width="45" height="45" style="margin-top: -20px; margin-left: 25px;">');
 
-        }else if(pregunta.toLowerCase().indexOf("asignar")!==-1 || pregunta.toLowerCase().indexOf("reasingnar")!==-1){
+        }else if(pregunta.toLowerCase().indexOf("asignar")!==-1 || pregunta.toLowerCase().indexOf("reasignar")!==-1){
 
             document.getElementById("texto").value=null;
             document.getElementById("mensajes").insertAdjacentHTML('beforeend','<div style="border: solid; border-color: #A2A2A2; padding: 10px; border-radius: 10px; margin-left: 80px; margin-right: 100px;"><p style="font-weight: bold;">En el apartado de "Consultas" cada fila corresponde a un paciente y hay un boton que despliega un menu donde esta la opcion de "ASIGNAR/REASINGNAR".<br>Para esto ya debe existir el paciente.</p><br><a class="btn btn-outline-info" href="{{url('/consultas')}}">Consultas</a></div><img src="{{url('/imagenes/tesoni_c.png')}}" width="45" height="45" style="margin-top: -20px; margin-left: 25px;">');
